@@ -12,8 +12,8 @@
         page-break-after: always;
         width: 70vw;
         border: 4px inset black;
-        padding: 10px; /* Adăugăm o mică distanță între conținut și marginea bannerului */
-        box-sizing: border-box; /* Asigurăm că padding-ul este inclus în lățimea totală */
+        padding: 10px;
+        box-sizing: border-box;
     }
 
 
@@ -69,8 +69,8 @@
         text-align: center;
         font-weight: bold;
         opacity: 0.4;
-        z-index: 9999; /* Asigură că watermark-ul este întotdeauna afișat deasupra conținutului */
-        content: Mija Alex;
+        z-index: 9999;
+        content: 'Mija Alex';
     }
 
 
