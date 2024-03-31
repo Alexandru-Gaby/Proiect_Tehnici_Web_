@@ -1,0 +1,66 @@
+@media screen and (max-width: 1000px) 
+{
+    nav {
+        --inaltime-meniu: 2.2em;
+    }
+
+    #hamburger {
+        display: none;
+    }
+
+    ul.meniu li::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 5px;
+        background-image: linear-gradient(to right, #000, #fff);
+    }
+
+    ul.meniu li:hover::after {
+        animation: tranzitieGradient 1s ease forwards;
+    }
+
+    @keyframes tranzitieGradient {
+        0% {
+            width: 100%;
+        }
+
+        100% {
+            width: 0;
+        }
+    }
+
+    ul.sub-sub-meniu {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+    }
+
+    ul.sub-meniu li {
+        background-color: brown;
+    }
+
+    ul.meniu>li:hover>.sub-meniu,
+    ul.sub-meniu>li:hover>.sub-meniu {
+        display: block;
+    }
+
+    #acasa-mediu {
+        display: block;
+    }
+
+    .meniu>li:first-of-type {
+        width: fit-content;
+    }
+
+    #acasa-mediu span {
+        display: none;
+    }
+
+    #acasa {
+        display: none;
+    }
+}

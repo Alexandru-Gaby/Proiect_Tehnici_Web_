@@ -1,0 +1,49 @@
+/*
+p{
+    color:#b30f0f;
+    font-weight:bold;
+    
+}
+/* intrebari variabile cu acelasi nume in container */
+
+
+h2{
+    border: 2px solid var(--culoare1);
+
+}
+
+#header {
+    background-color:#e0ef3c;
+    border: 2px solid #DB2E21; 
+    border-radius: 15px;
+    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+
+.footer {
+    background-color: #F7D08A;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 15px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/*
+.grid{
+    background-color: #30E187;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 20px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin-top: 20px;
+}
+*/
+
+#anunturi{    padding-left: 20px; }
+
+#calendar{    padding-left: 20px; }
+
+
+  

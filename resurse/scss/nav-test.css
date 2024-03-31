@@ -1,0 +1,90 @@
+nav {
+  --inaltime-meniu:3.5em;
+  --latime-buton:150px;
+  --culoare-border:#ffffff;
+  height: var(--inaltime-meniu);
+  border: 3px solid var(--culoare-border);
+  border-radius: 2px;
+}
+
+#hamburger, #ch-menu {
+  display: none;
+}
+
+#acasa-mediu {
+  display: block;
+}
+
+#acasa {
+  display: none;
+}
+
+.meniu {
+  list-style-type: none;
+  display: flex;
+  /* justify-content: space-between; */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: var(--culoare-border);
+}
+.meniu li {
+  --culoare-highlight: #ef9b00;
+  background-color: var(--culoare-highlight);
+  border: 1px solid var(--culoare-border);
+  width: var(--latime-buton);
+  height: var(--inaltime-meniu);
+  /* text-align: border; */
+  box-sizing: border-box;
+  position: relative;
+}
+.meniu li div, .meniu li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  line-height: var(--inaltime-meniu);
+  color: var(--culoare-bordura);
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: all is linear;
+}
+.meniu li:hover > ul {
+  display: block;
+  position: absolute;
+  z-index: 100;
+  animation: animatie_submeniu 1s linear 1 forwards;
+  transform-origin: center top;
+}
+.meniu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: var(--culoare-border);
+}
+
+/*submeniu*/
+.meniu ul {
+  display: none;
+  position: absolute;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.meniu li:hover > div, .meniu li:hover > a {
+  background-color: #30E187;
+  color: orange;
+}
+
+@keyframes animatie_submeniu {
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+/* text decoration none - linkuri
+   COLOR: back - linkuri
+   imagini, iframe, video - display: none */
+
+/*# sourceMappingURL=nav-test.css.map */

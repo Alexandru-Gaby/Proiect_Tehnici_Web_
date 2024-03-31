@@ -1,0 +1,140 @@
+nav {
+    --latime-buton: 100%;
+    --inaltime-meniu: 3.5em;
+    --culoare-border: #bbb;
+
+    height: var(--inaltime-meniu);
+    border: 3px solid var(--culoare-border);
+    border-radius: 2px;
+}
+
+#hamburger,
+#ch-menu {
+    display: none;
+}
+
+.meniu > li >ul 
+{
+    left: 0;
+    top: 100%;
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+    transform-origin: center top;
+    transform: scaleY(0);
+    opacity: 0;
+    width: var(--latime-buton);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.meniu {
+    list-style-type: none;
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+#acasa {
+    display: none;
+}
+
+/* ptr meniu si submeniu */
+.meniu,
+.meniu>li>ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--culoare-border);
+}
+
+.meniu li {
+    --culoare-highlight: #ef9b00;
+    background-color: var(--culoare-highlight);
+    border: 1px solid var(--culoare-border);
+    width: var(--latime-buton);
+    height: var(--inaltime-meniu);
+    /* text-align: border; */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.meniu li div,
+.meniu li a 
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    line-height: var(--inaltime-meniu);
+    color: var(--culoare-bordura);
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all is linear;
+}
+
+.meniu li:hover>div,
+.meniu li:hover>a {
+    background-color: #30E187;
+    color: orange;
+}
+
+.meniu>li:hover>ul {
+    position: absolute;
+    z-index: 100;
+    transform: scaleY(1);
+    opacity: 1;
+} 
+
+/* @keyframes animatie_submeniu {
+    100% {
+        opacity: 1;
+        transform: scaleY(1);
+
+    }
+} */
+
+.meniu>li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    background-image: linear-gradient(to right, #000, #fff);
+}
+
+ul.meniu>li:hover::after {
+    animation: tranzitieGradient 1s ease forwards;
+}
+
+@keyframes tranzitieGradient {
+    0% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+/* 
+.meniu>li>ul>li:hover>a 
+{
+    color: yellow;
+    background-color: brown;
+} */
+
+/* .meniu>li>div>ul {
+    display: none;
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    top: 100%;
+    left: 0;
+    background-color: var(--culoare-border);
+} */
+
+/* .sub-meniu {
+    width: var(--latime-buton);
+    transform-origin: center top;
+} */

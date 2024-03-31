@@ -1,0 +1,77 @@
+:root 
+{
+    font-size: 16px;
+}
+
+#grid-pagina
+{
+    display: grid;
+    grid-template-areas: "welcome welcome welcome welcome"
+                          "orar orar calendar calendar"
+                          "orar orar anunturi anunturi"
+                          "utilizatori_online date_utilizator date_utilizator date_site"
+                          "promotii promotii promotii promotii";
+                          border: 2px solid rgb(93, 248, 58);
+
+                            
+}
+
+#grid-pagina > *
+{
+    border:2px solid rgb(93, 248, 58);
+}
+
+
+#welcome
+{
+    grid-area: welcome;
+}
+
+#promotii
+{
+    grid-area: promotii;
+}
+
+#orar
+{
+    grid-area: orar;
+}
+
+#calendar
+{
+    grid-area: calendar;
+}
+
+#anunturi
+{
+    grid-area: anunturi;
+}
+
+#utilizatori_online
+{
+    grid-area: utilizatori_online;
+}
+
+#date_utilizator
+{
+    grid-area: date_utilizator;
+}
+
+#date_site
+{
+    grid-area: date_site;
+}
+
+@media screen and (max-width: 1000px)
+{
+    :root{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px)
+{
+    :root{
+        font-size: 12px;
+    }
+}
