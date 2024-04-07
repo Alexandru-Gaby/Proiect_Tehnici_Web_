@@ -75,3 +75,11 @@
         font-size: 12px;
     }
 }
+
+/* Etapa 4 */
+video::cue
+{
+    background-color: transparent;
+    color:white;
+    text-shadow: 1px 1px 2px black; 
+}

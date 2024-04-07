@@ -1,11 +1,14 @@
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) 
+{
     /*facem vizibil iconul de hamburger meniu*/
 
-    #hamburger {
+    #hamburger 
+    {
         display: block;
     }
 
-    #hamburger>img {
+    #hamburger>img 
+    {
         height: var(--inaltime-meniu);
         display: block;
     }
@@ -18,8 +21,9 @@
         width: 100%;
     }
 
-    /*aici facem vizibil meniul cand faem click pe hamburger meniu*/
-    #ch-menu:checked+ul.meniu {
+    /*aici facem vizibil meniul cand facem click pe hamburger meniu*/
+    #ch-menu:checked+ul.meniu 
+    {
         display: block;
         z-index: 2;
         position: relative;
@@ -32,8 +36,8 @@
     }
 
     #ch-menu:checked+ul.meniu>li>div,
-    #ch-menu:checked+ul.meniu>li>a {
-
+    #ch-menu:checked+ul.meniu>li>a 
+    {
         z-index: 2;
         position: relative;
         transform-origin: 50% 50%;
@@ -45,12 +49,14 @@
     }
 
     /*optiunile se intind pe toata latimea containerului*/
-    nav ul.meniu li {
+    nav ul.meniu li 
+    {
         width: 100%;
     }
 
     /*meniul sa vina deasupra continutul de mai jos, fara sa impinga continutul*/
-    nav ul.meniu>li ul {
+    nav ul.meniu>li ul 
+    {
         position: absolute;
         width: 100%;
         z-index: 200;
@@ -58,37 +64,44 @@
         opacity: 1 !important;
     }
 
-    #ch-menu:checked+ul.meniu>li ul>* {
+    #ch-menu:checked+ul.meniu>li ul>*
+    {
         position: relative;
         z-index: 200;
     }
 
-    nav ul.meniu>li:hover>ul {
+    nav ul.meniu>li:hover>ul 
+    {
 
         z-index: 200;
         animation: none;
     }
 
 
-    /* pentru fiecare element din submeniu generam un triunghiulet alb inaintea lui*/
-    nav ul.meniu>li li a:before {
+    /* pt. fiecare element din submeniu generam un triunghiulet alb inaintea lui*/
+    nav ul.meniu>li li a:before 
+    {
         content: " \25B7\00A0	";
-        color: white;
+        color: #bbb;
 
     }
 
-    @keyframes aparitie_meniu_p {
-        0% {
+    @keyframes aparitie_meniu_p 
+    {
+        0% 
+        {
             opacity: 0;
 
         }
 
-        100% {
+        100% 
+        {
             opacity: 1;
         }
     }
 
-    @keyframes aparitie_meniu_p_btn {
+    @keyframes aparitie_meniu_p_btn 
+    {
         0% {
             transform: scale(0, 0);
         }

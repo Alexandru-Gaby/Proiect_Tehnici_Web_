@@ -46,4 +46,44 @@ h2{
 #calendar{    padding-left: 20px; }
 
 
-  
+/* Etapa 4 linkuri */
+a:visited
+{
+    color:#746c6b; 
+}
+
+/* border ->click pe link */
+a:active
+{
+    border: 2px solid black !important;
+}
+
+/* linkurile externe */
+a[href^="http"]::before
+{
+    color:#e0ef3c;
+    font-size: 1.5rem;
+    content:"\2BB3";
+    transition:color 0.5s linear;
+}
+
+a[href^="http"]:hover::before{
+    color: green;
+}
+
+a {
+    background: radial-gradient(aqua 40%, transparent 80%);
+    background-position: center;
+    background-size: 0 0;
+    background-repeat: no-repeat;
+    color: black;
+    transition: background-size 1s linear;
+}
+
+a:hover {
+    background-size: 100% 100%;
+}
+
+header a, a[href^="http"] {
+    background: transparent;
+}

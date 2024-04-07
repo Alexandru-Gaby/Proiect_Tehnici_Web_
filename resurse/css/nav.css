@@ -1,3 +1,4 @@
+/* Etapa 3 */
 nav {
     --latime-buton: 100%;
     --inaltime-meniu: 3.5em;
@@ -38,16 +39,18 @@ nav {
     display: none;
 }
 
-/* ptr meniu si submeniu */
+/* pt. meniu si submeniu */
 .meniu,
-.meniu>li>ul {
+.meniu>li>ul 
+{
     list-style-type: none;
     padding: 0;
     margin: 0;
     background-color: var(--culoare-border);
 }
 
-.meniu li {
+.meniu li 
+{
     --culoare-highlight: #ef9b00;
     background-color: var(--culoare-highlight);
     border: 1px solid var(--culoare-border);
@@ -73,27 +76,40 @@ nav {
 }
 
 .meniu li:hover>div,
-.meniu li:hover>a {
+.meniu li:hover>a 
+{
     background-color: #30E187;
     color: orange;
 }
 
-.meniu>li:hover>ul {
+.meniu>li:hover>ul 
+{
     position: absolute;
     z-index: 100;
-    transform: scaleY(1);
-    opacity: 1;
+    /* transform: scaleY(1); */
+    /* opacity: 1; */
+    transform-origin: center center;
+    animation: animatie_submeniu 1s ease forwards;
 } 
 
-/* @keyframes animatie_submeniu {
-    100% {
-        opacity: 1;
-        transform: scaleY(1);
-
+@keyframes animatie_submeniu 
+{
+    0% 
+    {
+        opacity: 0;
+        transform: scale(1, 0);
     }
-} */
+    100% 
+    {
+        opacity: 1;
+        transform: scale(1, 1);
+        /* 1,1 pe x latime  */
+        /* 0,1 pe y inaltime */
+    }
+}
 
-.meniu>li::after {
+.meniu>li::after 
+{
     content: '';
     position: absolute;
     bottom: 0;
@@ -103,38 +119,21 @@ nav {
     background-image: linear-gradient(to right, #000, #fff);
 }
 
-ul.meniu>li:hover::after {
+ul.meniu>li:hover::after 
+{
     animation: tranzitieGradient 1s ease forwards;
 }
 
-@keyframes tranzitieGradient {
-    0% {
+@keyframes tranzitieGradient 
+{
+    0% 
+    {
         width: 100%;
     }
 
-    100% {
+    100% 
+    {
         width: 0;
     }
 }
-/* 
-.meniu>li>ul>li:hover>a 
-{
-    color: yellow;
-    background-color: brown;
-} */
 
-/* .meniu>li>div>ul {
-    display: none;
-    position: absolute;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    top: 100%;
-    left: 0;
-    background-color: var(--culoare-border);
-} */
-
-/* .sub-meniu {
-    width: var(--latime-buton);
-    transform-origin: center top;
-} */

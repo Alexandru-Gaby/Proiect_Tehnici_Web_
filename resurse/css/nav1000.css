@@ -1,14 +1,17 @@
 @media screen and (max-width: 1000px) 
 {
-    nav {
+    nav 
+    {
         --inaltime-meniu: 2.2em;
     }
 
-    #hamburger {
+    #hamburger 
+    {
         display: none;
     }
 
-    ul.meniu li::after {
+    ul.meniu li::after 
+    {
         content: '';
         position: absolute;
         bottom: 0;
@@ -18,11 +21,13 @@
         background-image: linear-gradient(to right, #000, #fff);
     }
 
-    ul.meniu li:hover::after {
+    ul.meniu li:hover::after 
+    {
         animation: tranzitieGradient 1s ease forwards;
     }
 
-    @keyframes tranzitieGradient {
+    @keyframes tranzitieGradient 
+    {
         0% {
             width: 100%;
         }
@@ -32,35 +37,42 @@
         }
     }
 
-    ul.sub-sub-meniu {
+    ul.sub-sub-meniu 
+    {
         display: none;
         position: absolute;
         top: 0;
         left: 100%;
     }
 
-    ul.sub-meniu li {
+    ul.sub-meniu li 
+    {
         background-color: brown;
     }
 
     ul.meniu>li:hover>.sub-meniu,
-    ul.sub-meniu>li:hover>.sub-meniu {
+    ul.sub-meniu>li:hover>.sub-meniu 
+    {
         display: block;
     }
 
-    #acasa-mediu {
+    #acasa-mediu 
+    {
         display: block;
     }
 
-    .meniu>li:first-of-type {
+    .meniu>li:first-of-type 
+    {
         width: fit-content;
     }
 
-    #acasa-mediu span {
+    #acasa-mediu span 
+    {
         display: none;
     }
 
-    #acasa {
+    #acasa 
+    {
         display: none;
     }
 }
