@@ -20,6 +20,23 @@ h2{
     padding: 10px;
 }
 
+body
+{
+  --spatiere:29px;
+  padding-left:var(--spatiere);
+  padding-right:var(--spatiere);
+
+  --culoare-fundal:#0F91DC;
+  --culoare-text:#DB2E21;
+  --culoare-contur:#30E187;
+  --culoare-text-selectat:white;
+
+
+  background-color: var(--culoare-fundal);
+  color:var(--culoare-text);
+  font-weight:bold;
+  border: 10px solid var(--culoare-contur);
+}
 
 .footer {
     background-color: #F7D08A;

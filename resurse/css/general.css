@@ -218,3 +218,13 @@ tbody tr:hover
   padding-left: 10px;
   clear:left;
 }
+
+img, svg 
+{
+   vertical-align: bottom; 
+}
+
+/* *, *::before, *::after {
+  box-sizing: border-box; 
+}
+ */

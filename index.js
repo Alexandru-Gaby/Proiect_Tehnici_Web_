@@ -1,17 +1,45 @@
-
 const express = require("express");
 const fs= require('fs');
 const path=require('path');
 const sharp=require('sharp');
-// const sass=require('sass');
-// const ejs=require('ejs');
- 
+const sass=require('sass');
+const ejs=require('ejs');
+//file system =verifica ca exista un fisier
+const Client = require('pg').Client;
 
+var client= new Client({database:"cti_2024",
+        user:"alex",
+        password:"alex",
+        host:"localhost",
+        port:5432});
+client.connect();
 
-obGlobal ={
+client.query("select * from produse", function(err,rez)
+{
+    console.log(rez);
+})
+
+// [] vector
+// { } obiect
+
+obGlobal =
+{
     obErori:null,
-    obImagini:null
+    obImagini:null,
+    folderScss:path.join(__dirname,"resurse/scss"),
+    folderCss:path.join(__dirname,"resurse/css"),
+    folderBackup:path.join(__dirname,"backup"),
 }
+
+app= express();
+console.log("Folder proiect", __dirname);
+console.log("Cale fisier", __filename);
+console.log("Director de lucru", process.cwd());
+ 
+app.set("view engine","ejs");
+
+app.use("/resurse", express.static(__dirname+"/resurse"));
+app.use("/node_modules", express.static(__dirname+"/node_modules"));
 
 vect_foldere=["temp", "temp1"]
 for (let folder of vect_foldere){
@@ -21,13 +49,6 @@ for (let folder of vect_foldere){
     }
 }
 
-app= express();
-console.log("Folder proiect", __dirname);
-console.log("Cale fisier", __filename);
-console.log("Director de lucru", process.cwd());
- 
-app.set("view engine","ejs");
- 
 app.use("/resurse", express.static(__dirname+"/resurse"));
 
 
@@ -36,13 +57,55 @@ app.use("/resurse", express.static(__dirname+"/resurse"));
 //     res.sendFile(__dirname+"/index.html")
 // })
 
-app.get(["/","/home","/index"], function(req, res){
+app.get(["/","/home","/index"], function(req, res)
+{
     res.render("pagini/index", {ip: req.ip, imagini:obGlobal.obImagini.imagini});
 })
 
+// ----------------------Produse----------------------
+app.get("/produse", function(req, res)
+{
+    client.query("select * from prajituri", function(err,rez){
+       
+       
+       if(err) 
+       {
+        console.log(err);
+        afisareEroare(res,2);
+       }
+        else{
+    
+            res.render("pagini/produse", { produse: rez.rows, optiuni:[] } )
+            }
+        
+    })
+    })
+    
+    
+    app.get("/produse:id", function(req, res)
+    {
+        client.query(`select * from prajituri where id-${req.params.id}`, function(err,rez)
+        {
+           
+           
+           if(err) 
+           {
+            console.log(err);
+            afisareEroare(res,2);
+           }
+            else{
+        
+                res.sender("pagini/produs", { prod: rez.rows[0 ]} )
+                }
+            
+        })
+        
+    })
+        
 
 // trimiterea unui mesaj fix
-app.get("/cerere", function(req, res){
+app.get("/cerere", function(req, res)
+{
     res.send("<b>Hello</b> <span style='color:red'>world!</span>");
 
 })
@@ -58,6 +121,35 @@ app.get("/data", function(req, res){
     res.end();
 
 });
+
+app.get("*/galerie-animata.css",function(req, res){
+
+    var sirScss=fs.readFileSync(path.join(__dirname,"resurse/scss_ejs/galerie_animata.scss")).toString("utf8");
+    var culori=["navy","black","purple","grey"];
+    var indiceAleator=Math.floor(Math.random()*culori.length);
+    var culoareAleatoare=culori[indiceAleator]; 
+    rezScss=ejs.render(sirScss,{culoare:culoareAleatoare});
+    console.log(rezScss);
+    var caleScss=path.join(__dirname,"temp/galerie_animata.scss")
+    fs.writeFileSync(caleScss,rezScss);
+    try {
+        rezCompilare=sass.compile(caleScss,{sourceMap:true});
+        
+        var caleCss=path.join(__dirname,"temp/galerie_animata.css");
+        fs.writeFileSync(caleCss,rezCompilare.css);
+        res.setHeader("Content-Type","text/css");
+        res.sendFile(caleCss);
+    }
+    catch (err){
+        console.log(err);
+        res.send("Eroare");
+    }
+});
+
+app.get("*/galerie-animata.css.map",function(req, res){
+    res.sendFile(path.join(__dirname,"temp/galerie-animata.css.map"));
+});
+
 
 /*
 trimiterea unui mesaj dinamic in functie de parametri (req.params; req.query)
@@ -115,7 +207,8 @@ app.get("/*", function(req, res){
 
 })  
  
-function initErori(){
+function initErori()
+{
     var continut= fs.readFileSync(path.join(__dirname,"resurse/json/erori.json")).toString("utf-8");
     console.log(continut);
     
@@ -130,7 +223,8 @@ function initErori(){
 initErori()
 
 
-function afisareEroare(res, _identificator, _titlu, _text, _imagine){
+function afisareEroare(res, _identificator, _titlu, _text, _imagine)
+{
     let eroare=obGlobal.obErori.info_erori.find(
         function(elem){
             return elem.identificator==_identificator
@@ -138,7 +232,8 @@ function afisareEroare(res, _identificator, _titlu, _text, _imagine){
     )
     if (!eroare){
         let eroare_default=obGlobal.obErori.eroare_default;
-        res.render("pagini/eroare", {
+        res.render("pagini/eroare", 
+        {
             titlu: _titlu || eroare_default.titlu,
             text: _text || eroare_default.text,
             imagine: _imagine || eroare_default.imagine,
@@ -161,7 +256,8 @@ function afisareEroare(res, _identificator, _titlu, _text, _imagine){
 }
 
 
-function initImagini(){
+function initImagini()
+{
     var continut= fs.readFileSync(path.join(__dirname,"resurse/json/galerie.json")).toString("utf-8");
 
     obGlobal.obImagini=JSON.parse(continut);
@@ -173,18 +269,76 @@ function initImagini(){
         fs.mkdirSync(caleAbsMediu);
 
     //for (let i=0; i< vErori.length; i++ )
-    for (let imag of vImagini){
-        [numeFis, ext]=imag.fisier.split(".");
-        let caleFisAbs=path.join(caleAbs,imag.fisier);
+    for (let imag of vImagini)
+    {
+        [numeFis, ext]=imag.cale_imagine.split(".");
+        let caleFisAbs=path.join(caleAbs,imag.cale_imagine);
         let caleFisMediuAbs=path.join(caleAbsMediu, numeFis+".webp");
         sharp(caleFisAbs).resize(300).toFile(caleFisMediuAbs);
         imag.fisier_mediu=path.join("/", obGlobal.obImagini.cale_galerie, "mediu",numeFis+".webp" )
-        imag.fisier=path.join("/", obGlobal.obImagini.cale_galerie, imag.fisier )
+        imag.fisier=path.join("/", obGlobal.obImagini.cale_galerie, imag.cale_imagine)
+        //resize ecran mic 200
         
     }
     console.log(obGlobal.obImagini)
 }
 initImagini();
+
+app.get("/galerie", function(req,res)
+{
+	res.render("pagini/galerie",{imagini:obGlobal.obImagini.imagini,title:"galerie"});
+})
+
+
+function compileazaScss(caleScss, caleCss)
+{
+    console.log("cale:",caleCss);
+    if(!caleCss){
+
+        let numeFisExt=path.basename(caleScss);
+        let numeFis=numeFisExt.split(".")[0]   /// "a.scss"  -> ["a","scss"]
+        caleCss=numeFis+".css";
+    }
+    
+    if (!path.isAbsolute(caleScss))
+        caleScss=path.join(obGlobal.folderScss,caleScss )
+    if (!path.isAbsolute(caleCss))
+        caleCss=path.join(obGlobal.folderCss,caleCss )
+    
+
+    let caleBackup=path.join(obGlobal.folderBackup, "resurse/css");
+    if (!fs.existsSync(caleBackup)) {
+        fs.mkdirSync(caleBackup,{recursive:true})
+    }
+    
+    // la acest punct avem cai absolute in caleScss si  caleCss
+
+    let numeFisCss=path.basename(caleCss);
+    if (fs.existsSync(caleCss)){
+        fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resurse/css",numeFisCss ))// +(new Date()).getTime()
+    }
+    rez=sass.compile(caleScss, {"sourceMap":true});
+    fs.writeFileSync(caleCss,rez.css)
+    //console.log("Compilare SCSS",rez);
+}
+    //compileazaScss("a.scss");
+    vFisiere=fs.readdirSync(obGlobal.folderScss);
+    for( let numeFis of vFisiere ){
+        if (path.extname(numeFis)==".scss"){
+            compileazaScss(numeFis);
+        }
+    }
+
+
+    fs.watch(obGlobal.folderScss, function(eveniment, numeFis){
+        console.log(eveniment, numeFis);
+        if (eveniment=="change" || eveniment=="rename"){
+            let caleCompleta=path.join(obGlobal.folderScss, numeFis);
+            if (fs.existsSync(caleCompleta)){
+                compileazaScss(caleCompleta);
+            }
+        }
+    })
 
  
 app.listen(8080);

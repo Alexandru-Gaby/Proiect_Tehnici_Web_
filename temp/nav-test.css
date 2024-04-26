@@ -1,4 +1,5 @@
-nav {
+nav 
+{
   --inaltime-meniu:3.5em;
   --latime-buton:150px;
   --culoare-border:#ffffff;
@@ -7,7 +8,8 @@ nav {
   border-radius: 2px;
 }
 
-#hamburger, #ch-menu {
+#hamburger, #ch-menu 
+{
   display: none;
 }
 

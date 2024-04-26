@@ -47,7 +47,9 @@
                 <section id="welcome">
                     <h2>Bine ați venit la Magazinul Nostru de Echipament
                         Sportiv!</h2>
-
+                    
+                        <button type="button" class="btn btn-primary btn-lg">Stil-1-mare</button>
+                        
                     <p>Ip: <%-locals.ip %> </p>
                     <!-- <p class="intro" style="color: pink; font-variant: small-caps;">Va multumim pentru vizionare</p> -->
 
@@ -130,7 +132,7 @@
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                     
-                    <video width="480" height="320" poster="/resurse/imagini/Nike Airmax 97.jpg" controls preload="auto">
+                    <video width="560" height="320" poster="/resurse/imagini/Nike Airmax 97.jpg" controls preload="auto">
                         <source src="/resurse/video/AIR MAX 97.mp4" type="video/mp4">
                         <source src="/resurse/video/AIR-MAX-97.ogv" type="video/ogv">
                         <track default src="/resurse/vtt/captions_ro.vtt" kind="captions" srclang="ro" label="română">
@@ -242,9 +244,12 @@
                                     <td>-</td>
                                     <td>inchis</td>
                                 </tr>
+                                <tr>
+                                    <td colspan="6">Închis cu ocazia
+                                    sărbătorilor legale.</td>
+                                </tr>
                             </tbody>
-                            <tfoot><tr><td colspan="6">Închis cu ocazia
-                                        sărbătorilor legale.</td></tr></tfoot>
+                            <tfoot></tfoot>
                         </table>
                     </div>
                 </section>
@@ -266,6 +271,50 @@
 
             </div>
 
+            
+
+            <section id="galerie-statica">
+                <h2>Galerie</h2>
+                <div id="grid-galerie">
+                    <% 
+                    const oraCurenta = new Date().getHours();
+                    for (let imag of locals.imagini) { 
+                        const intervale = imag.timp.split("-");
+                        const oraStart = parseInt(intervale[0].split(":")[0]);
+                        const oraSfarsit = parseInt(intervale[1].split(":")[0]);
+                        if (oraCurenta >= oraStart && oraCurenta < oraSfarsit) {%>
+                            
+                    
+                        <figure>
+                            
+                            <picture>
+                                <source srcset="<%= imag.fisier_mic %>" media="(max-width:500px)"/>
+                                <source srcset="<%= imag.fisier_mediu %>" media="(max-width:1200px)"/>
+                                <img src="<%= imag.fisier %>" alt="<%= imag.descriere %>">
+                            </picture>
+                            
+                            <figcaption><%= imag.descriere %></figcaption>
+
+                        </figure>
+                    <% } %>
+                    <% } %>
+                </div>
+
+            </section>
+            
+            <div id="text-container">
+                <div id="text">Text 1</div>
+                <div id="text-reflectat">Text 2</div>
+            </div>
+            
+            <section>
+                <h2>Section 1</h2>
+                <p>Some content here...</p>
+                <hr class="custom-hr">
+                <h2>Section 2</h2>
+                <p>More content here...</p>
+            </section>
+        
             <math>
                 <mfrac>
                     <mn>1</mn>
@@ -273,7 +322,8 @@
                 </mfrac>
             </math>
         </main>
-                <%- include("../fragmente/footer.ejs") %>
+                
+        <%- include("../fragmente/footer.ejs") %>
         
     </body>
 
