@@ -29,7 +29,7 @@
 
   #text-container:hover #text-reflectat 
   {
-    transform: rotateX(180deg) skew(-45deg) scaleY(1) translate(10px, -25px); 
+    transform: rotateX(180deg) skew(-45deg) scaleY(1) translate(10px, -32px); 
     z-index: 2;
     animation: stretch 1s infinite alternate;
   }
