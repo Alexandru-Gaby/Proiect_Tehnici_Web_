@@ -6,51 +6,64 @@
 			"cale_imagine":"imagine1.jpg",
 			"titlu":"Maiou Swingman Jersey",
 			"descriere":"Nike NBA Icon Edition albastru",
-			"timp":"09:00-16:00"
+			"timp":"09:00-22:00"
 		},
 		{
 			"cale_imagine":"Tricou tenis.jpg",
 			"titlu":"Tricou tenis",
 			"descriere":"Adidas T-Shirt",
-			"timp":"11:00-18:00"
+			"timp":"11:00-22:00"
 		},
 		{
 			"cale_imagine":"imagine2.jpg",
 			"titlu":"Nike NBA Swingman Shorts",
 			"descriere":"Nike NBA Heat Icon Edition albastru",
-			"timp":"09:00-16:00"
+			"timp":"09:00-22:00"
 			
 		},
 		{
 			"cale_imagine":"short tennis.jpg",
 			"titlu":"Short Tenis",
 			"descriere":"Adidas MelbErg Short",
-			"timp":"11:00-19:00"
+			"timp":"11:00-22:00"
 		},
 		{
 			"cale_imagine":"LeBron shoes.jpg",
 			"titlu":"Incaltaminte Baschet",
 			"descriere":"Nike LeBron NXXT Gen Basketball Shoes",
-			"timp":"14:00-19:00"
+			"timp":"14:00-22:00"
 		},
 		{
 			"cale_imagine":"imagine6.jpg",
 			"titlu":"Încălțăminte tenis",
 			"descriere":"Adidas Adizero ubersonic 4.1",
-			"timp":"11:00-18:00"
+			"timp":"11:00-22:00"
 		},
 		{
 			"cale_imagine":"minge baschet.jpg",
 			"titlu":"Minge baschet",
 			"descriere":"Nike Elite Championship 8 2.0 Basketball",
-			"timp":"14:00-19:00"
+			"timp":"14:00-22:00"
 		},
 		{
 			"cale_imagine":"imagine5.jpg",
 			"titlu":"Wilson Clash V2",
 			"descriere":"Racheta de tenis",
-			"timp":"11:00-18:00"
+			"timp":"11:00-22:00"
+		},
+		{
+			"cale_imagine":"minge baschet.jpg",
+			"titlu":"Minge baschet",
+			"descriere":"Nike Elite Championship 8 2.0 Basketball",
+			"timp":"14:00-22:00"
+		},
+		{
+			"cale_imagine":"imagine5.jpg",
+			"titlu":"Wilson Clash V2",
+			"descriere":"Racheta de tenis",
+			"timp":"11:00-22:00"
 		}
+		
 		
 		
 	]

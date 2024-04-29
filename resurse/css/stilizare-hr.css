@@ -1,0 +1,23 @@
+.custom-hr {
+  border: none;
+  height: 10px;
+  margin: 10px 0;
+  position: relative;
+  background: repeating-radial-gradient(circle, #FFA500, #FFA500 10px, #DB2E21 10px, #DB2E21 20px);
+}
+
+
+.hr-container
+{
+    position: relative;
+    box-shadow: 0px 2px 55px 15px #0F91DC;
+}
+
+.fa-football
+{
+    position:absolute;
+    top:0;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
