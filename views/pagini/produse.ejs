@@ -4,48 +4,79 @@
         <meta name="description" content="Magazinul AlexSports cuprinde toate tipurile de echipamente sportive: Fotbal,baschet,Volei,Tenis,transport la domiciliu in toata tara">
         <meta name="keywords" content="AlexSports,echipament sportiv,fotbal,baschet,tenis,minge de fotbal,Bucuresti,sector 4">
         <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
-        <title>Cofetăria Dulcelind - home</title>
+        <title>Magazin sportiv</title>
         <%- include("../fragmente/head") %>     
         <script type="text/javascript" src=/resurse/js/produse.js></script>
-
+        
     </head>
+    
     <body>
     <%- include("../fragmente/header") %>
 
     <main>
-        <label> Nume: <input type="text" id="inp-nume"></label>
+        <label> 
+            Nume: <input type="text" id="inp-nume">
+        </label>
+        <!-- <input type="text" class="form-control" id="inp-nume"> -->
+        
         <!--<label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label>-->
-        <div> Calorii:<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
-            <p><label>Dietetic (calorii &lt; 350)
-                <input id="i_rad1"  name="gr_rad" value="0:350" type="radio"/>
-            </label></p>
-            <p><label>Mediu (350 &le; calorii &lt; 700)
-                <input id="i_rad2"  name="gr_rad" value="350:750" type="radio"/>
-            </label>
-            <p><label>Ridicat caloric (700 &le; calorii)
-                <input id="i_rad3" name="gr_rad" value="700:1000000000" type="radio"/>
-            </label>
-            <p><label>Toate
-                <input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/>
-            </label>
+        
+
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gr_rad" id="i_rad1" value="0:350">
+            <label class="form-check-label btn btn-outline-primary" for="i_rad1">(Greutate &lt; 350)</label>
         </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="radio" name="gr_rad" id="i_rad2" value="350:700">
+            <label class="form-check-label btn btn-outline-primary" for="i_rad2">(350 &le; Greutate &lt; 700)</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="radio" name="gr_rad" id="i_rad3" value="700:1000">
+            <label class="form-check-label btn btn-outline-primary" for="i_rad3">(700 &le; Greutate)</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="radio" name="gr_rad" id="i_rad4" value="toate" checked>
+            <label class="form-check-label btn btn-outline-primary" for="i_rad4">Toate</label>
+        </div>
+          
 
 
-        <label> Pret minim: <input type="range" id="inp-pret" value="0" min="0"  max="70"> <span id="infoRange">(0)</span></label>
+        <label> Pret minim: 
+            <input type="range" id="inp-pret" value="0" min="0"  max="800"> <span id="infoRange">(0)</span>
+        </label>
+        
         <label>Select simplu:
             <select id="inp-categorie">
-                <option id="sel-toate" selected value="toate">toate</option>
+                <option id="sel-toate" selected value="toate">Toate</option>
                 <% for (let opt of locals.optiuni) { %>
-                    <option value="<%- opt.unnest %>"><%- opt.unnest %> </option>
+                    <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
                 <% } %>
             </select>
-        </label>
-        <p>
-        <button id="filtrare">Filtreaza</button> 
 
-        <button id="resetare">Reseteaza</button><br/>
-        <button id="sortCrescNume">Sorteaza crescator dupa pret si nume</button>
-        <button id="sortDescrescNume">Sorteaza descrescator dupa pret si nume</button>
+            <!-- select generat dinamic -->
+            <!-- meniu mod dinamic -->
+                <!-- <li><a href="/produse?tip=barbati"> <pr%- opt.unnest %></a></li> -->
+
+        </label>
+
+        <div class="btn-group-toggle" data-toggle="buttons">
+            <input type="checkbox" id="toggle"  autocomplete="off"> Impermeabil:
+            <label class="btn btn-outline-primary" for="toggle"></label>
+        </div>
+        
+         <div class="form-floating">
+            <textarea class="form-control" id="textarea-descriere" placeholder="" ></textarea>
+            <label for="textarea-descriere" class="form-label">Descriere</label>
+            <div class="invalid-feedback">Eroare</div>
+        </div>
+          
+
+        <p>
+            <button class="buton-filtrare" id="filtrare"><i class="bi bi-funnel"></i>Filtreaza</button> 
+            <button class="buton-resetare" id="resetare"><i class="bi bi-arrow-counterclockwise"></i>Reseteaza</button><br/>
+            <button class="buton-sortCrescNume" id="sortCrescNume"><i class="bi bi-sort-alpha-up"></i>Sorteaza crescator dupa pret si dupa nr. culori</button>
+            <button class="buton-sortDescrescNume" id="sortDescrescNume"><i class="bi bi-sort-alpha-down-alt"></i>Sorteaza descrescator dupa pret si dupa nr.culori</button>
         
         </p>
         
@@ -53,22 +84,46 @@
         <section id="produse">
             <h2>Produse</h2>
             <div class="grid-produse">
-                <% for( let prod of locals.produse) { %>
-                    <article class="produs" >
+                <% for( let prod of locals.produse) 
+                { %>
+                    <article class="produs" id="ent<%- prod.id %>">
+                        
+                        
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
-                        <div class="info-prod">
-                            <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
-                            <p class="calorii">Calorii: <span class="val-calorii"><%- prod.calorii%></span></p>
-                            <p class="gramaj">Gramaj: <span class="val-gramaj"><%- prod.gramaj%></span></p>
-                        </div>
-                        <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
+                    
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Pret</th>
+                                    
+                                    <th>Vector culori</th>
+                                    <th>Impermeabil</th>
+                                    <th>Greutate</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td><span class="val-pret"><%- prod.pret%></span></td>
+                                
+                                <td><span class="val-culori"><%- prod.vector_culori.join(', ') %></span></td>
+                                <td><span class="val-impermeabil"><%- prod.rezistent_la_apa ? 'Da' : 'Nu' %></span></td>
+                                <td><span class="val-greutate"><%- prod.greutate%></span></td>
+                                <td><span class="data"><%- prod.data_adaugare%></span></td>
+                                
+                            </tr>
+                        </table>
+                    
+                        <p class="descriere">Descriere: <span class="val-descriere"><%- prod.descriere%></span></p>
+                        <td><span class="val-categorie"><%- prod.categorie%></span></td>
                         <figure>
-                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
+                            <img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" />
                         </figure>
-                        <label class="selecteaza-cos">
+
+                        <label class="selecteaza-cos btn-group-toggle" data-toggle="buttons">
                             Selectează:<br/>
                             <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
                         </label>
+                       
                     </article>
                 <% }%>
             </div>
@@ -78,3 +133,23 @@
     <%- include("../fragmente/footer") %>
     </body>
 </html>
+
+
+
+
+
+
+// <div> Greutate:<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
+//             <p><label> (Greutate &lt; 350)
+//                 <input id="i_rad1"  name="gr_rad" value="0:350" type="radio"/>
+//             </label></p>
+//             <p><label> (350 &le; Greutate &lt; 700)
+//                 <input id="i_rad2"  name="gr_rad" value="350:700" type="radio"/>
+//             </label>
+//             <p><label> (700 &le; Greutate)
+//                 <input id="i_rad3" name="gr_rad" value="700:1000" type="radio"/>
+//             </label>
+//             <p><label>Toate
+//                 <input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/>
+//             </label>
+//         </div>

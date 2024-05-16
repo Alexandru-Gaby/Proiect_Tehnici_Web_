@@ -6,6 +6,15 @@ const sass=require('sass');
 const ejs=require('ejs');
 //file system =verifica ca exista un fisier
 const Client = require('pg').Client;
+const AccesBD= require("./module_proprii/accesbd.js");
+
+const formidable=require("formidable");
+const {Utilizator}=require("./module_proprii/utilizator.js")
+const session=require('express-session');
+const Drepturi = require("./module_proprii/drepturi.js");
+
+
+
 
 var client= new Client({database:"cti_2024",
         user:"alex",
@@ -14,10 +23,24 @@ var client= new Client({database:"cti_2024",
         port:5432});
 client.connect();
 
-client.query("select * from produse", function(err,rez)
+
+client.query("select * from unnest(enum_range(null::categ_produse))", function(err,rez)
 {
     console.log(rez);
 })
+
+
+client.query("select * from unnest(enum_range(null::subcategorie_produse))", function(err,rez)
+{
+    console.log(rez);
+})
+
+
+client.query("select * from unnest(enum_range(null::tip_sport))", function(err,rez)
+{
+    console.log(rez);
+})
+
 
 // [] vector
 // { } obiect
@@ -31,17 +54,60 @@ obGlobal =
     folderBackup:path.join(__dirname,"backup"),
 }
 
+function afisareEroare(res, _identificator, _titlu, _text, _imagine)
+{
+    let eroare=obGlobal.obErori.info_erori.find(
+        function(elem){
+            return elem.identificator==_identificator
+        }
+    )
+    if (!eroare){
+        let eroare_default=obGlobal.obErori.eroare_default;
+        res.render("pagini/eroare", 
+        {
+            titlu: _titlu || eroare_default.titlu,
+            text: _text || eroare_default.text,
+            imagine: _imagine || eroare_default.imagine,
+        }) //al doilea argument este locals
+        return;
+    }
+    else{
+        if (eroare.status)
+            res.status(eroare.identificator)
+
+        res.render("pagini/eroare", {
+            titlu: _titlu || eroare.titlu,
+            text: _text || eroare.text,
+            imagine: _imagine || eroare.imagine,
+        })
+        return;
+
+    }
+
+}
+
 app= express();
 console.log("Folder proiect", __dirname);
 console.log("Cale fisier", __filename);
 console.log("Director de lucru", process.cwd());
  
+
+
+app.use(session({ // aici se creeaza proprietatea session a requestului (pot folosi req.session)
+    secret: 'abcdefg',//folosit de express session pentru criptarea id-ului de sesiune
+    resave: true,
+    saveUninitialized: false
+  }));
+
+
+
 app.set("view engine","ejs");
 
 app.use("/resurse", express.static(__dirname+"/resurse"));
+app.use("/poze_uploadate", express.static(__dirname+"/resurse"));
 app.use("/node_modules", express.static(__dirname+"/node_modules"));
 
-vect_foldere=["temp", "temp1"]
+vect_foldere=["temp", "temp1", "backup", "poze_uploadate"]
 for (let folder of vect_foldere){
     let caleFolder=path.join(__dirname, folder)
     if (!fs.existsSync(caleFolder)){
@@ -50,6 +116,7 @@ for (let folder of vect_foldere){
 }
 
 app.use("/resurse", express.static(__dirname+"/resurse"));
+
 
 
 
@@ -63,45 +130,147 @@ app.get(["/","/home","/index"], function(req, res)
 })
 
 // ----------------------Produse----------------------
+//selectie de produse
 app.get("/produse", function(req, res)
 {
-    client.query("select * from prajituri", function(err,rez){
-       
-       
-       if(err) 
-       {
+
+    var conditionQuery="";
+    
+    if(req.query.tip)
+    {
+        conditionQuery=` where categorie='${req.query.tip}'`
+    }
+    console.log(req.query.tip);
+    
+    client.query("select * from unnest(enum_range(null::categ_produse))", function(err,rezOptiuni)
+    {
+
+        client.query(`select * from produse ${conditionQuery}`, function(err,rez)
+        {   
+            if(err) 
+            {
+                console.log(err);
+                afisareEroare(res,2);
+            }else{
+            
+                res.render("pagini/produse", { produse: rez.rows, optiuni:rezOptiuni.rows } )
+                 }
+            
+        })
+    });
+})
+    
+app.get("/produs/:id", function(req, res)
+{
+    client.query(`select * from produse where id=${req.params.id}`, function(err,rez)
+    {
+        
+        if(err) 
+        {
         console.log(err);
         afisareEroare(res,2);
-       }
+        }
         else{
     
-            res.render("pagini/produse", { produse: rez.rows, optiuni:[] } )
+            res.render("pagini/produs", { prod: rez.rows[0]} )
             }
         
     })
-    })
     
-    
-    app.get("/produse:id", function(req, res)
-    {
-        client.query(`select * from prajituri where id-${req.params.id}`, function(err,rez)
+})
+
+//--------------------------------Utilizatori--------------------------//
+
+
+app.post("/inregistrare",function(req, res)
+{
+    //adauga un input cerinta
+    var username;
+    var poza;
+    var formular= new formidable.IncomingForm()
+    formular.parse(req, function(err, campuriText, campuriFisier )
+    {//4
+        console.log("Inregistrare:",campuriText);
+
+
+        console.log(campuriFisier);
+        console.log(poza, username);
+        var eroare="";
+
+
+        // TO DO var utilizNou = creare utilizator
+        var utilizNou = new Utilizator();
+        try
         {
+            utilizNou.setareNume=campuriText.nume[0];
+            utilizNou.setareUsername=campuriText.username[0];
+            utilizNou.email=campuriText.email[0]
+            utilizNou.prenume=campuriText.prenume[0]
            
-           
-           if(err) 
-           {
-            console.log(err);
-            afisareEroare(res,2);
-           }
-            else{
-        
-                res.sender("pagini/produs", { prod: rez.rows[0 ]} )
+            utilizNou.parola=campuriText.parola[0];
+            utilizNou.culoare_chat=campuriText.culoare_chat[0];
+            utilizNou.poza= poza[0];
+            Utilizator.getUtilizDupaUsername(campuriText.username[0], {}, function(u, parametru ,eroareUser ){
+                if (eroareUser==-1){//nu exista username-ul in BD
+                    //TO DO salveaza utilizator
+                    //in cazul in care nu era in tabel
+                    utilizNou.salvareUtilizator()
                 }
-            
-        })
-        
+                else{
+                    eroare+="Mai exista username-ul";
+                }
+
+
+                if(!eroare){
+                    res.render("pagini/inregistrare", {raspuns:"Inregistrare cu succes!"})
+                   
+                }
+                else
+                    res.render("pagini/inregistrare", {err: "Eroare: "+eroare});
+            })
+
+        }
+        catch(e)
+        {
+            console.log(e);
+            eroare+= "Eroare site; reveniti mai tarziu";
+            console.log(eroare);
+            res.render("pagini/inregistrare", {err: "Eroare: "+eroare})
+        }
+   
+    });
+    formular.on("field", function(nume,val){  // 1
+   
+        console.log(`--- ${nume}=${val}`);
+       
+        if(nume=="username")
+            username=val;
     })
-        
+    formular.on("fileBegin", function(nume,fisier){ //2
+        console.log("fileBegin");
+       
+        console.log(nume,fisier);
+        //TO DO adaugam folderul poze_uploadate ca static si sa fie creat de aplicatie
+        //TO DO in folderul poze_uploadate facem folder cu numele utilizatorului (variabila folderUser)
+        var folderUser=path.join(__dirname, "poze_uploadate", username);
+        if(!fs.existsSync(folderUser))
+            fs.mkdirSync(folderUser)
+       
+        fisier.filepath=path.join(folderUser, fisier.originalFilename)
+        poza=fisier.originalFilename;
+        //fisier.filepath=folderUser+"/"+fisier.originalFilename
+        console.log("fileBegin:",poza)
+        console.log("fileBegin, fisier:",fisier)
+
+
+    })    
+    formular.on("file", function(nume,fisier){//3
+        console.log("file");
+        console.log(nume,fisier);
+    });
+});
+
+
 
 // trimiterea unui mesaj fix
 app.get("/cerere", function(req, res)
@@ -122,33 +291,33 @@ app.get("/data", function(req, res){
 
 });
 
-app.get("*/galerie-animata.css",function(req, res){
+// app.get("*/galerie-animata.css",function(req, res){
 
-    var sirScss=fs.readFileSync(path.join(__dirname,"resurse/scss_ejs/galerie_animata.scss")).toString("utf8");
-    var culori=["navy","black","purple","grey"];
-    var indiceAleator=Math.floor(Math.random()*culori.length);
-    var culoareAleatoare=culori[indiceAleator]; 
-    rezScss=ejs.render(sirScss,{culoare:culoareAleatoare});
-    console.log(rezScss);
-    var caleScss=path.join(__dirname,"temp/galerie_animata.scss")
-    fs.writeFileSync(caleScss,rezScss);
-    try {
-        rezCompilare=sass.compile(caleScss,{sourceMap:true});
+//     var sirScss=fs.readFileSync(path.join(__dirname,"resurse/scss_ejs/galerie_animata.scss")).toString("utf8");
+//     var culori=["navy","black","purple","grey"];
+//     var indiceAleator=Math.floor(Math.random()*culori.length);
+//     var culoareAleatoare=culori[indiceAleator]; 
+//     rezScss=ejs.render(sirScss,{culoare:culoareAleatoare});
+//     console.log(rezScss);
+//     var caleScss=path.join(__dirname,"temp/galerie_animata.scss")
+//     fs.writeFileSync(caleScss,rezScss);
+//     try {
+//         rezCompilare=sass.compile(caleScss,{sourceMap:true});
         
-        var caleCss=path.join(__dirname,"temp/galerie_animata.css");
-        fs.writeFileSync(caleCss,rezCompilare.css);
-        res.setHeader("Content-Type","text/css");
-        res.sendFile(caleCss);
-    }
-    catch (err){
-        console.log(err);
-        res.send("Eroare");
-    }
-});
+//         var caleCss=path.join(__dirname,"temp/galerie_animata.css");
+//         fs.writeFileSync(caleCss,rezCompilare.css);
+//         res.setHeader("Content-Type","text/css");
+//         res.sendFile(caleCss);
+//     }
+//     catch (err){
+//         console.log(err);
+//         res.send("Eroare");
+//     }
+// });
 
-app.get("*/galerie-animata.css.map",function(req, res){
-    res.sendFile(path.join(__dirname,"temp/galerie-animata.css.map"));
-});
+// app.get("*/galerie-animata.css.map",function(req, res){
+//     res.sendFile(path.join(__dirname,"temp/galerie-animata.css.map"));
+// });
 
 
 /*
@@ -190,6 +359,9 @@ app.get("/*", function(req, res){
                     }
                     
                 }
+                else{
+                    res.send(rezHtml+"")
+                }
 
             
         });         
@@ -206,7 +378,9 @@ app.get("/*", function(req, res){
     }
 
 })  
- 
+
+
+
 function initErori()
 {
     var continut= fs.readFileSync(path.join(__dirname,"resurse/json/erori.json")).toString("utf-8");
@@ -223,37 +397,7 @@ function initErori()
 initErori()
 
 
-function afisareEroare(res, _identificator, _titlu, _text, _imagine)
-{
-    let eroare=obGlobal.obErori.info_erori.find(
-        function(elem){
-            return elem.identificator==_identificator
-        }
-    )
-    if (!eroare){
-        let eroare_default=obGlobal.obErori.eroare_default;
-        res.render("pagini/eroare", 
-        {
-            titlu: _titlu || eroare_default.titlu,
-            text: _text || eroare_default.text,
-            imagine: _imagine || eroare_default.imagine,
-        }) //al doilea argument este locals
-        return;
-    }
-    else{
-        if (eroare.status)
-            res.status(eroare.identificator)
 
-        res.render("pagini/eroare", {
-            titlu: _titlu || eroare.titlu,
-            text: _text || eroare.text,
-            imagine: _imagine || eroare.imagine,
-        })
-        return;
-
-    }
-
-}
 
 
 function initImagini()

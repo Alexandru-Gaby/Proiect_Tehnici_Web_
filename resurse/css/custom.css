@@ -11846,13 +11846,38 @@ textarea.form-control-lg {
 }
 .btn {
   background-color: #FFA500;
+  border-radius: 10px;
+  border-width: 5px;
 }
 
 .btn-primary {
   background-color: #FFA500;
   color: red;
+  border-radius: 40px;
+  border-width: 5px;
 }
 
 .btn-primary:hover {
-  background-color: black;
+  background-color: brown;
+}
+
+input {
+  border-radius: 10px;
+  border-width: 5px;
+  border-color: #ffffff;
+  background-color: navajowhite;
+}
+
+.buton-filtrare, .buton-sortDescrescNume, .buton-sortCrescNume, .buton-resetare {
+  border-radius: 40px;
+  border-width: 5px;
+  background-color: #2EE8D2;
+  border-color: #00398f;
+}
+
+@media (max-width: 700px) {
+  .buton- i {
+    display: inline-block;
+    vertical-align: middle;
+  }
 }

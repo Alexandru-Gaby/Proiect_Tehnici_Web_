@@ -4,13 +4,16 @@
         scolar!</div>
     <h1>Magazin echipament sportiv</h1>
         <header>       
-            <button id="schimba_tema" class="btn btn-primary">Schimba tema</button>
-            <script src="/resurse/js/tema.js"></script>
+            <button id="schimba-tema" class="btn btn-primary btn-toggle" aria-pressed="false" autocomplete="off">
+                <span class="bi bi-sun-fill"></span>
+                <span class="fas fa-moon"></span>
+                <span class="visually-hidden">Schimba tema</span>
+            </button>
         </header>
 
     <nav>
         <label id="hamburger" for="ch-menu">
-            <img src="resurse/imagini/Hamburger_icon_alb.png"
+            <img src="/resurse/imagini/Hamburger_icon_alb.png"
                 alt="menu">
         </label>
 
@@ -19,20 +22,23 @@
             <li>
                 <div id="acasa">Acasă</div>
                 <div id="acasa-mediu">
-                    <i class="fas fa-regular fa-house"></i>
-                    <span>Welcome</span>
+                    <a href="/index">
+                        <i class="fas fa-regular fa-house"></i>
+                        <span>Welcome</span>
+                    </a>
                 </div>
             </li>
-            <li><a href="#">Înregistrare</a></li>
-            <li><a href="#">Meniu</a></li>
+            <li><a href="/index#anunturi">Anunțuri</a></li>
+            <li><a href="/index#orar">Orar</a></li>
             
             <li>
                 <a href="#">Categorii</a>
+                
                 <ul class="sub-meniu">
                     <li>
                         <a href="/produse">Toate</a>
                     </li>
-                    
+
                     <li>
                         <a href="/produse?tip=barbati">Bărbați</a>
                     </li>
@@ -42,9 +48,34 @@
                     <li>
                         <a href="/produse?tip=copii">Copii</a>
                     </li>
+
                 </ul>
             </li>
-            <li><a href="#">Reduceri</a></li>
+
+            <li><div>Despre</div>
+            
+                <ul>
+
+                </ul>
+            
+            </li>
+
+            
+            <li><a href="/index#promotii">Promoții</a></li>
+            <li><a href="/index#utilizatori_online">Utilizatori Online</a></li>
+        
+        
+        
         </ul>
     </nav>
 </header>
+
+
+
+
+<!-- <p4 for (let opt of locals.optiuni) { %> 
+    <li>
+        <a href="/produse?tip=<pr- opt.unnest %>"><pr- opt.unnest %></a>
+    </li>
+
+<pr }%>  -->
