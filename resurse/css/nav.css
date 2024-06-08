@@ -23,10 +23,17 @@ nav {
   list-style-type: none;
   display: flex;
   /* justify-content: space-between; */
-  list-style-type: none;
   padding: 0;
   margin: 0;
-  background-color: var(--culoare-border);
+}
+.meniu > li::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 5px;
+  background-image: linear-gradient(to left, #000, #fff);
 }
 .meniu li {
   --culoare-highlight: #ef9b00;
@@ -37,6 +44,7 @@ nav {
   /* text-align: border; */
   box-sizing: border-box;
   position: relative;
+  list-style-type: none;
 }
 .meniu li div, .meniu li a {
   display: block;
@@ -47,35 +55,60 @@ nav {
   color: var(--culoare-bordura);
   text-decoration: none;
   box-sizing: border-box;
-  transition: all is linear;
+  transition: all 1s linear;
 }
-.meniu li:hover > ul {
-  display: block;
-  position: absolute;
-  z-index: 100;
-  animation: animatie_submeniu 1s linear 1 forwards;
-  transform-origin: center top;
+.meniu li:hover a {
+  margin-top: 0px;
+  max-height: 10rem;
+  transition: 0.5s linear;
 }
-.meniu ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  background-color: var(--culoare-border);
-  /*submeniu*/
-  display: none;
-  position: absolute;
-  list-style-type: none;
-  padding: 0;
+.meniu li:hover > .sub-meniu {
+  margin-top: 0px;
+  max-height: 20rem;
+  transition: 0.5s linear;
 }
-
 .meniu li:hover > div, .meniu li:hover > a {
   background-color: #30E187;
-  color: orange;
+  color: rgb(87, 77, 77);
+}
+.meniu li:hover::after {
+  animation: tranzitieGradient 1.5s ease forwards;
 }
 
-@keyframes animatie_submeniu {
+.sub-meniu {
+  padding-left: 0px;
+  list-style-type: none;
+  display: block;
+  margin-top: var(--inaltime-meniu);
+  max-height: 0px;
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  transition: 0.5s linear;
+}
+
+.profil {
+  display: none;
+}
+
+.profil:hover a {
+  display: block;
+}
+
+.meniu div:hover + ul {
+  display: block;
+  background-color: #ef9b00;
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+@keyframes tranzitieGradient {
+  0% {
+    width: 100%;
+  }
   100% {
-    opacity: 1;
-    transform: scaleY(1);
+    width: 0;
   }
 }

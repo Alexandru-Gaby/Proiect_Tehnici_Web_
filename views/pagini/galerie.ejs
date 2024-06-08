@@ -17,26 +17,26 @@
 
         <main>
         
-            <% include("../fragmente/galerie") %>
+            <%- include("../fragmente/galerie.ejs") %>
 
         </main>
     
         <%- include("../fragmente/footer.ejs");  %> 
 
       
-        <a href="Galerie"></a>
-        <% include _gallery.scss %>
+        <!-- <a href="Galerie"></a> -->
+        <!-- <pr include _gallery.scss %>
 
         <div class="galerie">
-        <% for (let i = 0; i < imagini.length; i++) { %>
+        <pr for (let i = 0; i < imagini.length; i++) { %>
             <div class="gallery-item">
-            <img src="<%= imagini[i].cale_imagine %>" alt="<%= imagini[i].titlu %>">
-            <h3><%= imagini[i].titlu %></h3>
-            <p><%= imagini[i].descriere %></p>
-            <p><%= imagini[i].timp %></p>
+            <img src="<pr= imagini[i].cale_imagine %>" alt="<pr%= imagini[i].titlu %>">
+            <h3><pr= imagini[i].titlu %></h3>
+            <p><pr= imagini[i].descriere %></p>
+            <p><pr= imagini[i].timp %></p>
             </div>
-        <% } %>
-        </div>
+        <pr } %>
+        </div> -->
 
     </body>
 </html>

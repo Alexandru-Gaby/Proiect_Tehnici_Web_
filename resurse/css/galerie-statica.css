@@ -16,14 +16,12 @@
 
 #grid-galerie img
 {
-  width: 100%;
+  width: 70%;
 }
 
 #grid-galerie figcaption
 {
-  text-align:center;
   counter-increment: nrimag 1;
-
   transition: background-color 1.25s ease-out, color 1.25s ease-out;
 }
 

@@ -1,18 +1,9 @@
-/*
-p{
-    color:#b30f0f;
-    font-weight:bold;
-    
+h2
+{
+    color: #e0ef3c;
 }
-/* intrebari variabile cu acelasi nume in container */
-
-
-h2{
-    border: 2px solid var(--culoare1);
-
-}
-
-#header {
+#header 
+{
     background-color:#e0ef3c;
     border: 2px solid #DB2E21; 
     border-radius: 15px;
@@ -22,23 +13,45 @@ h2{
 
 body
 {
-  --spatiere:29px;
-  padding-left:var(--spatiere);
-  padding-right:var(--spatiere);
-
   --culoare-fundal:#0F91DC;
   --culoare-text:#DB2E21;
   --culoare-contur:#30E187;
   --culoare-text-selectat:white;
+
+  --spatiere:29px;
+  --spatiere-ecran-mediu:27px;
+  --spatiere-ecran-mic:20px;
+  padding-left:var(--spatiere);
+  padding-right:var(--spatiere);
+
+  --grid-gap-mare: 20px;
+  --grid-gap-mediu: 15px;
+  --grid-gap-mic: 10px;
 
 
   background-color: var(--culoare-fundal);
   color:var(--culoare-text);
   font-weight:bold;
   border: 10px solid var(--culoare-contur);
+  font-family: 'Alice';
+
+
+  --media-width-large: 100%;
+  --media-width-medium: 70%;
+  --media-width-small: 50%;
+
+  --media-max-width-large: 600px;
+  --media-max-width-medium: 600px;
+  --media-max-width-small: 400px;
+
+  --media-min-width-large: 300px;
+  --media-min-width-medium: 150px;
+  --media-min-width-small: 100px;
 }
 
-.footer {
+
+.footer 
+{
     background-color: #F7D08A;
     border: 2px solid #333;
     border-radius: 15px;
@@ -47,23 +60,65 @@ body
     margin-top: 20px;
 }
 
-/*
-.grid{
-    background-color: #30E187;
-    border: 2px solid #333;
-    border-radius: 15px;
-    box-shadow: 20px 0px 10px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    margin-top: 20px;
+#grid-pagina
+{
+    display: grid;
+    grid-gap:var(--grid-gap-mare);   
 }
-*/
 
-#anunturi{    padding-left: 20px; }
+@media only screen and (max-width: 1000px) 
+{
+    body 
+    {
+      padding-left: var(--spatiere-ecran-mediu);
+      padding-right: var(--spatiere-ecran-mediu);
+    }
 
-#calendar{    padding-left: 20px; }
+    #grid-pagina
+    {
+        grid-gap: var(--grid-gap-mediu);
+    }
+
+    video,iframe
+    {
+        min-width: 40%;
+        max-width: 50%;
+        height: 30%;
+        height: fit-content;
+    }
+  }
+
+@media only screen and (max-width: 700px) 
+{
+    body 
+    {
+      padding-left: var(--spatiere-ecran-mic);
+      padding-right: var(--spatiere-ecran-mic);
+    }
+
+    #grid-pagina
+    {
+        grid-gap:var(--grid-gap-mic);
+    }
+    
+    video,iframe
+    {
+        min-width: 40%;
+        max-width: 50%;
+        height: 30%;
+        height: fit-content;
+    
+    }
+}
 
 
 /* Etapa 4 linkuri */
+a:link
+{
+    color: black;
+    text-decoration: none;
+}
+
 a:visited
 {
     color:#746c6b; 
@@ -84,11 +139,13 @@ a[href^="http"]::before
     transition:color 0.5s linear;
 }
 
-a[href^="http"]:hover::before{
+a[href^="http"]:hover::before
+{
     color: green;
 }
 
-a {
+a 
+{
     background: radial-gradient(aqua 40%, transparent 80%);
     background-position: center;
     background-size: 0 0;
@@ -97,10 +154,38 @@ a {
     transition: background-size 1s linear;
 }
 
-a:hover {
+a:hover 
+{
     background-size: 100% 100%;
 }
 
-header a, a[href^="http"] {
+header a, a[href^="http"] 
+{
     background: transparent;
+}
+
+/* Etapa 4 Subtitrare */
+video::cue
+{
+    background-color: transparent;
+    color:white;
+    text-shadow: 1px 1px 2px black; 
+}
+
+
+/* icon-uri */
+.fa-solid
+{
+    animation: spin 2s infinite linear;
+}
+
+.fa-football
+{
+    animation: none;
+}
+
+@keyframes spin 
+{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

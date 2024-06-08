@@ -1,41 +1,54 @@
-body{
+body
+{
   --culoare-mov:#C886FF;
---culoare-roz-inchis:rgb(229,173,198);
---culoare-roz-inchis-t:rgb(229,173,198,0.5);
+  --culoare-roz-inchis:rgb(229,173,198);
+  --culoare-roz-inchis-t:rgb(229,173,198,0.5);
   --cl-marcare:rgb(255,219,235);
   --cl-light-t:rgba(255,255,255,0.7);
   --cl-text:black;
   --imag-body-backgr:url("../imagini/background-bomboane.jpg");
   --gradient-body:linear-gradient(transparent, transparent 30%, white 50%, transparent 70%, transparent);
+
 }
-body.dark{
+
+body.dark
+{
+  --culoare-fundal:rgb(97, 94, 94);
   --culoare-mov:rgb(31, 31, 31);
---culoare-roz-inchis:rgb(64,27,66);
---culoare-roz-inchis-t:rgb(64,27,66,0.5);
+  --culoare-roz-inchis:rgb(64,27,66);
+  --culoare-roz-inchis-t:rgb(64,27,66,0.5);
   --cl-marcare:rgb(81,43,81,0.5);
   --cl-light-t:rgba(255,255,255,0.2);
   --cl-text:white;
-  text-shadow:0px 0px 2px black,0px 0px 1px black,0px 0px 1px black;
+  --text-shadow:0px 0px 2px black,0px 0px 1px black,0px 0px 1px black;
   --imag-body-backgr:url("../imagini/Nike\ Airmax\ 97.jpg");
   --gradient-body:linear-gradient(transparent, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%, transparent);
+  --culoare-tabel:rgb(11, 249, 110);
 }
 
-body
+
+body.light-theme 
 {
-  --spatiere:29px;
-  padding-left:var(--spatiere);
-  padding-right:var(--spatiere);
+    background-color: #ffffff;
+    color: #000000;
+}
 
-  --culoare-fundal:#0F91DC;
-  --culoare-text:#DB2E21;
-  --culoare-contur:#30E187;
-  --culoare-text-selectat:white;
+body.dark-theme 
+{
+    background-color: #000000;
+    color: #ffffff;
+}
 
+body.blue-theme 
+{
+    background-color: #007bff;
+    color: #ffffff;
+}
 
-  background-color: var(--culoare-fundal);
-  color:var(--culoare-text);
-  font-weight:bold;
-  border: 10px solid var(--culoare-contur);
+body.green-theme 
+{
+    background-color: #28a745;
+    color: #ffffff;
 }
 
 
@@ -47,7 +60,7 @@ body
   font-style: normal;
 }
 
-/* Etapa 2 */
+/* Etapa 2  Link top*/
 #link-top
 {   
   --culoaretop:#10C8DC;
@@ -77,7 +90,6 @@ body
   
 #sageata
 {
-  /*height:1px;*/
   bottom:2rem;
   display:inline-block;
   /*border-bottom:1.5rem solid grey; 
@@ -89,6 +101,7 @@ body
   transition: transform 500ms linear, opacity 300ms ease;
 }
   
+
 #link-top:hover
 {
   opacity:1;
@@ -98,123 +111,86 @@ body
 
 #link-top:hover > #sageata
 {
-
   transform: scale(4,4);
   opacity:1;
-  /*background-color:rgba(48, 225, 135, 0.5);*/
 }
 
-
+/* Stilizare taburi */
 .container-iframe
 {
   display: flex;
   flex-direction: column-reverse;
-  width: 50%;
+  width: 45%;
 }
+
 
 .container-iframe iframe
 {
   width: 100%;
+  border: 3px solid #24c974;
+  margin-left: 0;
 }
 
-iframe 
-{
-  border: 5px solid green;
-}
-
-/* butoane */
-.taburi-iframe > a
-{
-  position: relative;
-  display: inline-block;
-  border: 1px solid rgb(30, 139, 8);
-  border-top: 10px solid #30E187;
-  border-top-width: 5;
-  background-color: yellow;
-  margin-bottom: 0;
-  padding: 0.6em;
-  border-radius: 10px;
-
-  /* border-bottom: 50px solid #555; */
-	border-left: 25px solid transparent;
-	border-right: 25px solid transparent;
-	height: 100px;
-  rotate: 180;
-
-  /* top: 20px; */
-  border-top-width: 10px; 
-  border-top-style: solid; 
-  border-top-color: rgb(9, 175, 14); 
-
-}
 
 .taburi-iframe
 {
   display: flex;
+  width: 100%;
   flex-direction: row;
-  justify-content: right;
+  justify-content: flex-end;
 }
 
-.taburi-iframe > a:last-child
+.taburi-iframe > a
 {
-  margin-bottom: 0;
-}
-
-#iframe[name="ifr-video"] 
-{
-  /* border: 5px solid green; */
   display: block;
-  margin: 0 auto;
+  background-color: #21d176;
+
+  margin-left: 5px;
+  margin-right: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  
+  border-top: 10px solid #219e5d;
+  border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
 }
 
 
-/* tabel */
-#tabel th, #tabel td 
-{
-  border: 2px solid rgb(31, 181, 240); 
-}
 
-#table
-{
-  border-spacing: 100px;
-  border-collapse: collapse;
-}
+/* Tabel */
 
-table 
+#tabel 
 {
   width: 100%;
   border-collapse: collapse;
-  border: 5px double #333;
+  border: 1px double #333;
+  border-spacing: 100px;
+  min-width: 600px; 
+  
 }
 
-table caption 
+#tabel caption 
 {
   text-align: center;
   font-weight: bold;
   font-size: 1.2em;
-  margin-bottom: 10px;
 }
 
-thead 
+#tabel thead 
 {
   background-color: #f2f2f2;
 }
 
-th 
+#tabel th,td 
 {
   padding: 10px;
-  border: 1px solid #333;
+  border: 3px solid #6c6a6a;
+ 
 }
 
-tbody 
+tbody,tfoot
 {
   background-color: #FFA500;
-}
-
-td 
-{
-  padding: 10px;
-  border: 1px solid #333;
 }
 
 tbody tr:nth-child(even) 
@@ -225,16 +201,20 @@ tbody tr:nth-child(even)
 tbody tr:hover
 {
   background-color: #39d7b7;
-  color: #e34e4e;
+  color: #f1f1f1;
   border: 5px solid #336699;
   transition: background-color 0.75s, color 0.75s, border-width 0.75s;
 }
 
 #tabel-container 
 {
-  overflow-x: scroll;
+  overflow-x: scroll; 
+  overflow-y: hidden; 
+  width: 100%;
+  outline: 5px double #333;
 }
 
+/* footer */
 #harta
 {
   padding-left: 10px;
@@ -250,3 +230,11 @@ img, svg
   box-sizing: border-box; 
 }
  */
+
+
+ /* Etapa 7 */
+ .accordion-button
+{
+	 background-color: #6a6868; 
+	color:var(--culoare-text);
+}

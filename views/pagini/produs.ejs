@@ -7,6 +7,7 @@
         <title>Magazin echipament sportiv</title>
         <%- include("../fragmente/head") %>     
         <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src=/resurse/js/produs.js></script>
     </head>
     <body>
         <%- include("../fragmente/header") %>
@@ -19,19 +20,37 @@
                             <span class="nume"><%- locals.prod.nume %></span>
                         </h3>
                         <!-- id? -->
+                        <span id="id" style="display: none;"> <%- locals.prod.id -%></span>
                         <p>Pret: <span class="pret"><%- locals.prod.pret %> </span></p>
-                        <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p>
+                        <!-- <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p> -->
                         <p>Nivel_de_practicare: <span class="nivel_de_practicare"><%- locals.prod.nivel_de_practicare %> </span></p>
                         <p>Tip_produs: <span class="tip_produs"><%- locals.prod.tip_produs %> </span></p>
                         <p>Greutate: <span class="val-greutate"><%- locals.prod.greutate %> </span></p>
                         <p>Sport: <span class="tip_sport"><%- locals.prod.sport %>  </span> </p>
-                        <p>Categorie: <span class="categorie"><%- locals.prod.categorie %> </span></p>
+                        <p>Categorie: <span class="val-categorie"><%- locals.prod.categorie %> </span></p>
                         <!-- vector_culori? -->
                         <p>Impermeabil: <span class="rezistent_la_apa"><%- locals.prod.rezistent_la_apa %> </span></p>
                         <p>Data adăugare: <span class="categorie"><%- locals.prod.data_adaugare %> </span></p>
+                        
+                        
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Descriere
+                                    </button>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        
+                                    <p><span class="descriere"><%- locals.prod.descriere %> </span></p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        
                         <figure class="imag-produs">
                             <img  src="/resurse/imagini/produse/<%- locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
-                        </figure>    
+                        </figure> 
+                        
+                        
                     </article>
                 
             </section>

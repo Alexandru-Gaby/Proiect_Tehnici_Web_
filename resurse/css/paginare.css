@@ -1,0 +1,23 @@
+#paginare-container{
+    display:flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#paginare-container .pagina {
+    margin: 0 5px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#paginare-container .pagina.active {
+    background-color: #023973; 
+}
+
+#paginare-container .pagina:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,30 @@
+<!-- <h2><a href="/galerie">Galerie</a></h2> -->
+
+<div id="grid-galerie">
+    
+    
+    <% 
+    const oraCurenta = new Date().getHours();
+    
+    for (let imag of locals.imagini) { 
+        const intervale = imag.timp.split("-");
+        const oraStart = parseInt(intervale[0].split(":")[0]);
+        const oraSfarsit = parseInt(intervale[1].split(":")[0]);
+        if (oraCurenta >= oraStart && oraCurenta < oraSfarsit) {%>
+            
+    
+        <figure>
+            
+            <picture>
+                <source srcset="<%= imag.fisier_mic %>" media="(max-width:500px)"/>
+                <source srcset="<%= imag.fisier_mediu %>" media="(max-width:1200px)"/>
+                <img src="<%= imag.fisier %>" alt="<%= imag.descriere %>">
+            </picture>
+            
+            <figcaption><%= imag.descriere %></figcaption>
+
+        </figure>
+
+    <% } %>
+    <% } %>
+</div>

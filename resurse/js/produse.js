@@ -9,6 +9,8 @@
 
 window.addEventListener("load", function()
 {
+    let pret_min=0
+    let pret_max=0
     function validateInputs() 
     {
         // Verifică inputul de tip text
@@ -21,8 +23,11 @@ window.addEventListener("load", function()
         // Verifică inputul de tip radio
         var radioButtons = document.querySelectorAll('input[name="gr_rad"]');
         var radioChecked = false;
-        for (var i = 0; i < radioButtons.length-1; i++) {
-            if (radioButtons[i].checked) {
+        for (var i = 0; i < radioButtons.length; i++) 
+        {
+            
+            if (radioButtons[i].checked) 
+            {
                 radioChecked = true;
                 break;
             }
@@ -43,6 +48,7 @@ window.addEventListener("load", function()
         if (validateInputs()) 
         {
             let inpNume = document.getElementById("inp-nume").value.toLowerCase().trim()
+            console.log(inpNume)
             // valNume = document.getElementsByClassName("val-nume")
             
 
@@ -72,18 +78,25 @@ window.addEventListener("load", function()
 
 
             let inpCategorie = document.getElementById("inp-categorie").value.toLowerCase().trim()
+            let produse = document.getElementsByClassName("produs")
 
+
+
+            // ---------------------------------------
+            // validateTextarea();
+            // const textareaValue = removeDiacritics(document.getElementById("textarea-descriere").value.toLowerCase().trim());
+            // ---------------------------------------
             
 
-            let produse = document.getElementsByClassName("produs")
             for(let produs of produse)
             {
                 let valNume = produs.getElementsByClassName("val-nume")[0].innerHTML.toLowerCase().trim()
                 let cond1 = valNume.startsWith(inpNume)
                 
-                
+                // pret_min = produs.pret[0]
+                console.log(produs.pret)
                 let valGreutate = parseInt(produs.getElementsByClassName("val-greutate")[0].innerHTML);
-                // console.log(valGreutate);
+                console.log(valGreutate)
                 let cond2 = (inpGreutate=="toate" || (minGreutate <= valGreutate && valGreutate < maxGreutate)) 
 
 
@@ -95,34 +108,30 @@ window.addEventListener("load", function()
                 //pretul din fiecare produs
                 let valPret = parseFloat(produs.getElementsByClassName("val-pret")[0].innerHTML)
                 let cond3 = (valPret > inpPret)
-
+                console.log(valPret)
                 if(cond1 && cond2 && cond3 && cond4)
                 {
+                   
                     produs.style.display="block";
                 }else
                 {
                     produs.style.display="none";
                 }
+                // ----------------------------
+
+                // // Condiție pentru a verifica dacă numele produsului conține textul din textarea
+                // if (valNume.includes(textareaValue)) {
+                //     produs.style.display = "block";
+                // } else {
+                //     produs.style.display = "none";
+                // }
+                
             }
+
+            
         }
     }
-// ----------------------------------------------------------------------------------------------------
-        const textareaCuvinteCheie = document.getElementById('textarea-descriere');
 
-        textareaCuvinteCheie.addEventListener('input', function() 
-        {
-            const inputValue = textareaCuvinteCheie.value.trim();
-            const invalidFeedback = document.querySelector('#textarea-descriere + .invalid-feedback');
-
-            // Verifică dacă inputul este valid și setează corespunzător clasele CSS
-            if (inputValue === ''){
-                textareaCuvinteCheie.classList.add('is-invalid');
-                invalidFeedback.style.display = 'block';
-                } else {
-                textareaCuvinteCheie.classList.remove('is-invalid');
-                invalidFeedback.style.display = 'none';
-                }
-        });
 
         // Selectează toate butoanele de tip checkbox și radio
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -303,8 +312,104 @@ window.addEventListener("load", function()
         }
 
     }
+    document.querySelectorAll(".pagina").forEach(button => {
+        button.addEventListener("click", function() {
+            const pagina = this.getAttribute("data-pagina");
+            window.location.href = `/produse?page=${pagina}&limit=10`;
+        });
+    });
+
+   // ---------------------------------Etapa 6b------------------------------
+   const textareaCuvinteCheie = document.getElementById('textarea-descriere');
+
+   textareaCuvinteCheie.addEventListener('input', function() 
+   {
+       const inputValue = textareaCuvinteCheie.value.trim();
+       const invalidFeedback = document.querySelector('#textarea-descriere + .invalid-feedback');
+
+       if (inputValue === ''){
+           textareaCuvinteCheie.classList.add('is-invalid');
+           invalidFeedback.style.display = 'block';
+           } else {
+           textareaCuvinteCheie.classList.remove('is-invalid');
+           invalidFeedback.style.display = 'none';
+           }
+   });
+
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        let textarea = document.getElementById('textarea-descriere');
+        if (textarea.value.trim() === '') {
+            textarea.classList.add('is-invalid');
+        } else {
+            textarea.classList.remove('is-invalid');
+            
+        }
+    });
+
+  
+
+
+    // bonus etapa 6
+    // cautare produs dupa nume  
+    function normalizeText(text) {
+        const diacriticsMap = {
+            'ă': 'a', 'â': 'a', 'î': 'i', 'ș': 's', 'ţ': 't', 'ț': 't', 'Ă': 'A', 'Â': 'A', 'Î': 'I', 'Ș': 'S', 'Ţ': 'T', 'Ț': 'T'
+        };
+        return text.replace(/[ăâîșțĂÂÎȘȚ]/g, match => diacriticsMap[match]);
+    }
+
+    document.getElementById("inp-nume").addEventListener("input", function() {
+        const searchQuery = normalizeText(this.value.toLowerCase());
+        const produse = document.querySelectorAll(".produs");
+    
+        produse.forEach(produs => {
+            const numeProdus = normalizeText(produs.querySelector(".val-nume").textContent.toLowerCase());
+    
+            if (numeProdus.includes(searchQuery)) {
+                produs.style.display = "block";
+            } else {
+                produs.style.display = "none";
+            }
+        });
+    });
+
+
+
+    
+    // Deschidere modal
+    document.querySelectorAll('.open-modal-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = button.getAttribute('data-index');
+            document.getElementById(`modal-${id}`).style.display = 'block';
+        });
+    });
+
+    // Închidere modal
+    document.querySelectorAll('.close').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = button.getAttribute('data-id');
+            document.getElementById(`modal-${id}`).style.display = 'none';
+        });
+    });
+
+    // Închidere modal când se dă click în afara lui
+    window.onclick = (event) => {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    };
+
+    
+    
+    
+    
+    
     
 }
 )
+
+
+
 
 

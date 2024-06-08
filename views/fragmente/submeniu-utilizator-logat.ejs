@@ -1,0 +1,8 @@
+<% if(locals.utilizator) { %>
+    <li><div><%- locals.utilizator.username %></div>
+        <ul class="profil">
+            <a href="/profil">Profil</a>
+            <a href="/logout">Logout</a>
+        </ul>
+    </li>
+<% } %>

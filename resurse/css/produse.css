@@ -8,7 +8,7 @@ main
 .grid-produse
 {
     display:grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap:1rem;
 }
 .grid-produse .produs
@@ -64,12 +64,12 @@ main
     font-weight:bold;
 }
 
-.info-produse
+/* .info-produse
 {
     background-color: var(--cl-marcare);
     padding:0.2rem;
     box-shadow: 0px 0px 0.5rem 0.15rem grey;
-}
+} */
 
 .produs
 {
@@ -121,4 +121,44 @@ article.produs figure
 {
     max-height: 100px;
     overflow: hidden;
+}
+
+
+.tabel-produse 
+{
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid #6c6c6c;
+}
+
+
+.tabel-produse th {
+    padding: 8px;
+    text-align: left;
+    /* background-color: #f2f2f2;*/
+    border: 3px solid #6c6c6c;
+}
+
+
+.tabel-produse td {
+    padding: 8px;
+    text-align: left;
+    border: 3px solid #6c6c6c;
+}
+
+/* Stilizare pentru prima linie de celule (prima linie de date) */
+.tabel-produse tr:first-child td {
+    font-weight: bold;
+} 
+
+tbody 
+{
+    --culoare-tabel:#30d055;
+    background-color: var(--culoare-tabel);
+}
+
+.tabel-produse thead
+{
+    background-color: #f2f2f2;
+    border: 3px solid #6c6c6c;
 }

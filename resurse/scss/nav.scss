@@ -9,7 +9,8 @@ nav{
 }
 
 
-#hamburger, #ch-menu{
+#hamburger, #ch-menu
+{
     display: none;
 }
 
@@ -38,14 +39,22 @@ nav{
         
     //     background-color: var(--culoare-border);
     // }
-
-    list-style-type:none ;
     padding: 0;
     margin: 0;
     
-    background-color: var(--culoare-border);
-
-    
+    > li
+    {
+        &::after
+        {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 5px;
+            background-image: linear-gradient(to left, #000, #fff);
+        }
+    }
     
     li
     {
@@ -57,6 +66,7 @@ nav{
         /* text-align: border; */
         box-sizing: border-box;
         position: relative;
+        list-style-type: none;
 
         div,  a
         {
@@ -68,57 +78,116 @@ nav{
             color: var(--culoare-bordura);
             text-decoration: none;
             box-sizing: border-box;
-            transition: all is linear;
+            transition: all 1s linear;
         }
 
-        &:hover>ul
+        // ul
+        // {
+        //     display: none;
+        //     background-color: #ef9b00;
+        // }
+        // div:hover+ul
+        // {
+        //     display:block;
+        //     margin-top: 0px;
+        //     max-height: 20rem;
+        //     transition: 0.5s linear;
+
+        // }
+
+        &:hover a
+       {
+        margin-top: 0px;
+        max-height: 10rem;
+        transition: 0.5s linear;
+       }
+        
+        &:hover > .sub-meniu
         {
-            display: block;
-            position: absolute;
-            z-index:100;
-            animation:animatie_submeniu 1s linear 1 forwards;
-            transform-origin: center top;
+            margin-top: 0px;
+            max-height: 20rem;
+            // transform-origin: center top;
+            transition: 0.5s linear;//deschida
             
         }
+
+        &:hover > div, &:hover > a
+        {
+            background-color: #30E187;
+            color:  rgb(87, 77, 77);
+        }
+
+
+        &:hover::after
+        {
+            animation: tranzitieGradient 1.5s ease forwards;
+        }
+
     }
 
-    ul
-    {
-        list-style-type:none ;
-        padding: 0;
-        margin: 0;
+
+  
+    // ul
+    // {
+    //     list-style-type:none ;
+    //     padding: 0;
+    //     margin: 0;
         
-        background-color: var(--culoare-border);
+    //     background-color: var(--culoare-border);
         
-        /*submeniu*/
-        display: none;
-        position: absolute;
-        list-style-type: none;
-        padding: 0;
-        // margin-top: 10px;
-    }
+    //     /*submeniu*/
+    //     display: none;
+    //     // position: absolute;
+    //     list-style-type: none;
+    //     padding: 0;
+    //     // margin-top: 10px;
+    // }
 }
 
-
-
-
-.meniu li:hover > div, .meniu li:hover > a
+.sub-meniu
 {
-background-color: #30E187;
-color: orange;
+    padding-left: 0px;
+    list-style-type: none;
+    display: block;
+    margin-top: var(--inaltime-meniu);
+    max-height: 0px;
+    //height: 0px;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    transition: 0.5s linear;
 }
 
 
-
-
-
-@keyframes animatie_submeniu 
+.profil 
 {
-    100%
-    {
-        opacity:1;
-        transform:scaleY(1);
-
-    }
-    
+    display: none;
 }
+
+.profil:hover a
+{
+    display: block;
+}
+
+.meniu div:hover+ul
+{
+    display:block;
+    background-color: #ef9b00;
+    width: 100%;
+    text-decoration: none;
+    box-sizing: border-box;
+    cursor: pointer;
+
+}
+
+@keyframes tranzitieGradient {
+    0% {
+      width: 100%;
+    }
+    100% {
+      width: 0;
+    }
+  }
+
+//display: inline
+//float:right

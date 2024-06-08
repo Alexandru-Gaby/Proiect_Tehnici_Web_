@@ -79,7 +79,7 @@
 
 
     /* pt. fiecare element din submeniu generam un triunghiulet alb inaintea lui*/
-    nav ul.meniu>li li a:before 
+    nav ul.sub-meniu>li li a:before 
     {
         content: " \25B7\00A0	";
         color: #bbb;

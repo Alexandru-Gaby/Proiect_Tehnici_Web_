@@ -47,8 +47,12 @@
                     <h2>Bine ați venit la Magazinul Nostru de Echipament
                         Sportiv!</h2>
                     
+                        <%- include("../fragmente/formular-login.ejs")%>
+
                         <button type="button" class="btn btn-primary btn-lg">Stil-1-mare</button>
-                        
+
+                        <%- include("../fragmente/useri-online.ejs")%>
+                    
                     <p>Ip: <%-locals.ip %> </p>
                     <!-- <p class="intro" style="color: pink; font-variant: small-caps;">Va multumim pentru vizionare</p> -->
 
@@ -131,18 +135,22 @@
                                 href="https://www.youtube.com/embed/KriBQVhsgZk?si=IvaE68mR-PnsV-Tn"
                                 target="ifr-video">Nike videoclip</a>
                             <a
+                                href="https://www.youtube.com/embed/g33Cde7j04c?si=KeEYDgigiYF180lj"
+                                target="ifr-video">Puma</a>
+                            <a
                                 href="https://www.youtube.com/embed/VmXdhno1Hlo?si=LWZKiCHwjN6beqjp"
                                 target="ifr-video">Under Armour</a>
+            
 
                         </div>
 
-                        <iframe name="ifr-video" width="560" height="415" src="https://www.youtube.com/embed/UyefASVrtbw?si=QiIxXWHKiwZMxjlE"
+                        <iframe name="ifr-video" width="600px" height="320px" src="https://www.youtube.com/embed/UyefASVrtbw?si=QiIxXWHKiwZMxjlE"
                         title="YouTube video player" frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
-                    
-                    <video width="560" height="320" poster="/resurse/imagini/Nike Airmax 97.jpg" controls preload="auto">
+                    <br>
+                    <video width="600px" height="320px" poster="/resurse/imagini/Nike Airmax 97.jpg" controls preload="auto">
                         <source src="/resurse/video/AIR MAX 97.mp4" type="video/mp4">
                         <source src="/resurse/video/AIR-MAX-97.ogv" type="video/ogv">
                         <track default src="/resurse/vtt/captions_ro.vtt" kind="captions" srclang="ro" label="română">

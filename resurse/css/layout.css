@@ -1,24 +1,27 @@
-:root 
+html 
 {
-    font-size: 16px;
+    font-size:16px;
 }
 
 #grid-pagina
 {
     display: grid;
+    grid-template-columns: repeat(4,1fr);
     grid-template-areas: "welcome welcome welcome welcome"
                           "orar orar calendar calendar"
                           "orar orar anunturi anunturi"
                           "utilizatori_online date_utilizator date_utilizator date_site"
                           "promotii promotii promotii promotii";
-                          border: 2px solid rgb(93, 248, 58);
-
-                            
+                          /* border: 2px solid rgb(93, 248, 58); */
+     
 }
 
 #grid-pagina > *
 {
-    border:2px solid rgb(93, 248, 58);
+    border:3px solid rgb(93, 248, 58);
+    font-size: 1rem;
+    transition: font-size 0.5s ease;
+    padding: 7px;
 }
 
 
@@ -64,22 +67,50 @@
 
 @media screen and (max-width: 1000px)
 {
-    :root{
+    html{
         font-size: 14px;
     }
+
+    #grid-pagina 
+    {
+        grid-template-columns: repeat(4,1fr);
+        grid-template-areas: 
+            "welcome welcome welcome welcome"
+            "calendar calendar calendar calendar"
+            "orar orar orar orar"
+            "anunturi anunturi anunturi anunturi"
+            "date_utilizator date_utilizator date_site date_site"
+            "utilizatori_online utilizatori_online utilizatori_online utilizatori_online"
+            "promotii promotii promotii promotii";
+    }
+
 }
 
 @media screen and (max-width: 768px)
 {
-    :root{
+    html
+    {
         font-size: 12px;
     }
-}
 
-/* Etapa 4 */
-video::cue
-{
-    background-color: transparent;
-    color:white;
-    text-shadow: 1px 1px 2px black; 
+    #grid-pagina
+    {
+        grid-template-columns: repeat(1,1fr);
+        grid-template-areas: 
+        "welcome"
+        "calendar"
+        "orar"
+        "anunturi"
+        "date_utilizator"
+        "date_site"
+        "utilizatori_online"
+        "promotii";
+        grid-template-columns: 1fr;
+    }
+
+    #grid-pagina > * 
+    {
+        transition: none !important;
+    }
+
 }

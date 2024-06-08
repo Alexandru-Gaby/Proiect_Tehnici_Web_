@@ -1,0 +1,25 @@
+@media screen and (max-width: 1000px) 
+{
+    .grid-produse {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-produse .produs p {
+        width: 100%;
+    }
+
+    .produs figure img {
+        width: 80%;
+    }
+
+    .tabel-produse th,
+    .tabel-produse td {
+        padding: 4px;
+    }
+
+    .tabel-produse tr:first-child td {
+        font-size: 14px;
+    }
+
+}
+/* #30d055; */
