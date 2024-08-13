@@ -103,8 +103,8 @@ body
     
     video,iframe
     {
-        min-width: 40%;
-        max-width: 50%;
+        min-width: 0.5rem;
+        max-width: 0.5rem;
         height: 30%;
         height: fit-content;
     
@@ -113,12 +113,6 @@ body
 
 
 /* Etapa 4 linkuri */
-a:link
-{
-    color: black;
-    text-decoration: none;
-}
-
 a:visited
 {
     color:#746c6b; 
@@ -128,6 +122,13 @@ a:visited
 a:active
 {
     border: 2px solid black !important;
+}
+
+/* linkuri nevizitate */
+a:link
+{
+    color: black;
+    text-decoration: none;
 }
 
 /* linkurile externe */
@@ -173,6 +174,7 @@ video::cue
 }
 
 
+
 /* icon-uri */
 .fa-solid
 {
@@ -188,4 +190,7 @@ video::cue
 {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+#termeni{
+    color: blue;
 }

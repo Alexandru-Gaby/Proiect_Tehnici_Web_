@@ -25,6 +25,7 @@ main
     margin-top: 0;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    height: 80px;
 }
 
 .grid-produse .produs h3 a
@@ -161,4 +162,10 @@ tbody
 {
     background-color: #f2f2f2;
     border: 3px solid #6c6c6c;
+}
+
+
+.produs-ieftin {
+    border: 20px solid green; 
+    padding: 10px; 
 }

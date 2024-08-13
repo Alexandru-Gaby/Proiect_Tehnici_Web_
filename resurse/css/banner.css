@@ -1,32 +1,41 @@
 #banner {
     position: fixed;
-    bottom: 0;
+    bottom: -100px;
     left: 0;
     width: 100%;
-    background-color: #333;
-    color: #fff; 
-    padding: 10px; 
-    display: none; 
+    background-color: #918c8c;
+    padding: 15px 0;
     text-align: center;
+    animation: slideIn 3s forwards; 
 }
 
 
-@keyframes slideInFromBottom 
-{
+
+#ok_cookies {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#ok_cookies:hover {
+    background-color: #0056b3;
+}
+
+
+@keyframes slideIn {
     0% {
-        transform: translateY(100%);
-        color: #fff; 
+        bottom: -100px;
+        color: #000000;
     }
     80% {
-        transform: translateY(-50px);
-        color: #ffcc00;
+        bottom: 20px;
+        color: #ca2929;
     }
     100% {
-        transform: translateY(0); /* Se aliniază cu partea de jos a paginii */
+        bottom: 0;
+        color: #000000;
     }
-}
-
-#banner 
-{
-    animation: slideInFromBottom 3s ease forwards;
 }

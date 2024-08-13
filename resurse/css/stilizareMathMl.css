@@ -1,0 +1,25 @@
+
+math mi {
+    color: rgb(14, 187, 81);
+    font-style: italic;
+  }
+  
+  /* Stilizare semn egal */
+  math mo {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* Stilizare radical */
+  math msqrt {
+    color: green;
+  }
+  
+  /* Stilizare numere */
+  math mn {
+    color: purple;
+  }
+  math {
+    font-size: 1.5em;
+  }
+  

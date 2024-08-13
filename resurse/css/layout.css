@@ -12,7 +12,7 @@ html
                           "orar orar anunturi anunturi"
                           "utilizatori_online date_utilizator date_utilizator date_site"
                           "promotii promotii promotii promotii";
-                          /* border: 2px solid rgb(93, 248, 58); */
+                          
      
 }
 
@@ -111,6 +111,7 @@ html
     #grid-pagina > * 
     {
         transition: none !important;
+        animation: none !important;
     }
 
 }

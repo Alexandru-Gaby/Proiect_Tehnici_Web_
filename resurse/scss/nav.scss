@@ -30,7 +30,6 @@ nav{
 {
     list-style-type: none;
     display: flex;
-    /* justify-content: space-between; */
     
     // .meniu, .meniu ul{
     //     list-style-type:none ;
@@ -63,7 +62,6 @@ nav{
         border:1px solid var(--culoare-border);
         width:var(--latime-buton);
         height:var(--inaltime-meniu);
-        /* text-align: border; */
         box-sizing: border-box;
         position: relative;
         list-style-type: none;
@@ -75,10 +73,10 @@ nav{
             height: 100%;
             cursor:pointer;
             line-height: var(--inaltime-meniu);
-            color: var(--culoare-bordura);
+            color: #DB2E21;
             text-decoration: none;
             box-sizing: border-box;
-            transition: all 1s linear;
+            transition: all 0.5s linear;
         }
 
         // ul
@@ -106,12 +104,13 @@ nav{
         {
             margin-top: 0px;
             max-height: 20rem;
-            // transform-origin: center top;
             transition: 0.5s linear;//deschida
-            
+            z-index: 100;
+            animation: animatie_submeniu 1s linear 1 forwards;
+            transform-origin: center top;
         }
 
-        &:hover > div, &:hover > a
+        &:hover div > a, &:hover > a
         {
             background-color: #30E187;
             color:  rgb(87, 77, 77);
@@ -146,9 +145,9 @@ nav{
 
 .sub-meniu
 {
+    display: block;
     padding-left: 0px;
     list-style-type: none;
-    display: block;
     margin-top: var(--inaltime-meniu);
     max-height: 0px;
     //height: 0px;
@@ -159,27 +158,55 @@ nav{
 }
 
 
-.profil 
-{
+// .profil 
+// {
+//     display: none;
+// }
+
+// .profil:hover a
+// {
+//     display: block;
+// }
+
+// .meniu div:hover+ul
+// {
+//     display:block;
+//     background-color: #ef9b00;
+//     width: 100%;
+//     text-decoration: none;
+//     box-sizing: border-box;
+//     cursor: pointer;
+
+// }
+.profil {
     display: none;
-}
-
-.profil:hover a
-{
-    display: block;
-}
-
-.meniu div:hover+ul
-{
-    display:block;
+    position: absolute;
     background-color: #ef9b00;
-    width: 100%;
-    text-decoration: none;
     box-sizing: border-box;
     cursor: pointer;
-
+    padding: 0; 
+    margin: 0; 
+    list-style: none; 
 }
 
+
+li:hover > .profil {
+    display: block;
+    left: 0;
+}
+
+
+.profil a {
+    display: block;
+    // padding: 10px;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+}
+
+.profil a:hover {
+    background-color: #cc7a00;
+}
 @keyframes tranzitieGradient {
     0% {
       width: 100%;
@@ -189,5 +216,10 @@ nav{
     }
   }
 
-//display: inline
-//float:right
+  @keyframes animatie_submeniu
+  {
+    100%{
+    opacity: 1;
+    transform: scaleY(1);
+    }
+  }

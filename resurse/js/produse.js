@@ -1,16 +1,6 @@
-// function formatData(data) {
-//     const options = { day: 'numeric', weekday: 'long', month: 'long', year: 'numeric' };
-//     const date = new Date(data);
-//     return date.toLocaleDateString('ro-RO', options);
-// }
-{/* <td><time datetime="<%- prod.data_adaugare %>"><%- formatData(prod.data_adaugare) %></time></td> */}
-
-
-
 window.addEventListener("load", function()
 {
-    let pret_min=0
-    let pret_max=0
+  
     function validateInputs() 
     {
         // Verifică inputul de tip text
@@ -22,6 +12,7 @@ window.addEventListener("load", function()
     
         // Verifică inputul de tip radio
         var radioButtons = document.querySelectorAll('input[name="gr_rad"]');
+        // console.log(radioButtons);
         var radioChecked = false;
         for (var i = 0; i < radioButtons.length; i++) 
         {
@@ -36,8 +27,10 @@ window.addEventListener("load", function()
             alert("Selectați o opțiune pentru greutate!");
             return false;
         }
+      
+        // var impermeabilChecked = document.getElementById("chk-impermeabil").checked;
+        // localStorage.setItem("chk-impermeabil", impermeabilChecked);
 
-    
         // Returnează true dacă toate inputurile sunt valide
         return true;
     }
@@ -48,7 +41,7 @@ window.addEventListener("load", function()
         if (validateInputs()) 
         {
             let inpNume = document.getElementById("inp-nume").value.toLowerCase().trim()
-            console.log(inpNume)
+            // console.log(inpNume)
             // valNume = document.getElementsByClassName("val-nume")
             
 
@@ -79,14 +72,15 @@ window.addEventListener("load", function()
 
             let inpCategorie = document.getElementById("inp-categorie").value.toLowerCase().trim()
             let produse = document.getElementsByClassName("produs")
-
-
-
-            // ---------------------------------------
-            // validateTextarea();
-            // const textareaValue = removeDiacritics(document.getElementById("textarea-descriere").value.toLowerCase().trim());
-            // ---------------------------------------
+            //rezistent-la-apa
+            let inpImpermeabil = document.getElementById("chk-impermeabil").checked;
+            //textarea
+            let keywords = document.getElementById("textarea-descriere").value.toLowerCase().trim().split(",").map(keyword => keyword.trim());
             
+            //sport selectat datalist
+            let sport = document.getElementById("sel-tip-sport").value.toLowerCase().trim();
+
+           
 
             for(let produs of produse)
             {
@@ -94,22 +88,36 @@ window.addEventListener("load", function()
                 let cond1 = valNume.startsWith(inpNume)
                 
                 // pret_min = produs.pret[0]
-                console.log(produs.pret)
+                // console.log(produs.pret)
                 let valGreutate = parseInt(produs.getElementsByClassName("val-greutate")[0].innerHTML);
-                console.log(valGreutate)
+
                 let cond2 = (inpGreutate=="toate" || (minGreutate <= valGreutate && valGreutate < maxGreutate)) 
 
 
                 //categoria produsului
                 let valCategorie = produs.getElementsByClassName("val-categorie")[0].innerHTML.toLowerCase()
-                let cond4 = (inpCategorie=="toate" || inpCategorie==valCategorie)
+                let cond3 = (inpCategorie=="toate" || inpCategorie==valCategorie)
 
 
                 //pretul din fiecare produs
                 let valPret = parseFloat(produs.getElementsByClassName("val-pret")[0].innerHTML)
-                let cond3 = (valPret > inpPret)
-                console.log(valPret)
-                if(cond1 && cond2 && cond3 && cond4)
+                let cond4 = (valPret > inpPret)
+                
+                //rezistent-la-apa
+                let valImpermeabilElement = produs.querySelector(".val-impermeabil");
+                let cond5 = !inpImpermeabil || (inpImpermeabil && valImpermeabilElement && valImpermeabilElement.textContent.trim() === 'Da');
+
+                // textarea
+                let valDescriere = produs.getElementsByClassName("val-descriere")[0].innerHTML.toLowerCase();
+                let cond6 = keywords.some(keyword => valDescriere.includes(keyword));
+
+                //tip_sport
+                let valSportElement = produs.querySelector(".tip_sport").textContent.toLowerCase().trim();
+                let cond7 = (sport === "toate" || sport === valSportElement);
+                
+               
+
+                if(cond1 && cond2 && cond3 && cond4 && cond5 && cond6 && cond7)
                 {
                    
                     produs.style.display="block";
@@ -117,14 +125,6 @@ window.addEventListener("load", function()
                 {
                     produs.style.display="none";
                 }
-                // ----------------------------
-
-                // // Condiție pentru a verifica dacă numele produsului conține textul din textarea
-                // if (valNume.includes(textareaValue)) {
-                //     produs.style.display = "block";
-                // } else {
-                //     produs.style.display = "none";
-                // }
                 
             }
 
@@ -132,50 +132,12 @@ window.addEventListener("load", function()
         }
     }
 
-
         // Selectează toate butoanele de tip checkbox și radio
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        // const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const radios = document.querySelectorAll('input[type="radio"]');
 
-        // Adaugă evenimente pentru fiecare buton pentru a modifica stilurile când sunt selectate/deselectate
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                this.classList.remove('btn-outline-primary');
-                this.classList.add('btn-primary');
-            } else {
-                this.classList.remove('btn-primary');
-                this.classList.add('btn-outline-primary');
-            }
-            });
-        });
-
-        radios.forEach(radio => {
-            radio.addEventListener('change', function() {
-            if (this.checked) {
-                this.classList.remove('btn-outline-primary');
-                this.classList.add('btn-primary');
-            } else {
-                this.classList.remove('btn-primary');
-                this.classList.add('btn-outline-primary');
-            }
-            });
-        });
+       
 // ----------------------------------------------------------------------------------------------------
-    // let iduriProduse=localStorage.getItem("cos_virtual");
-    // iduriProduse=iduriProduse?iduriProduse.split(","):[];      //["3","1","10","4","2"]
-
-    // for(let idp of iduriProduse)
-    // {
-    //     let ch = document.querySelector(`[value='${idp}'].select-cos`);
-    //     if(ch)
-    //     {
-    //         ch.checked=true;
-    //     }
-    //     else{
-    //         console.log("id cos virtual inexistent:", idp);
-    //     }
-    // }
 
 
 
@@ -216,7 +178,11 @@ window.addEventListener("load", function()
     }
     //range release
     
-    //document.getElementById("buton-filtrare").addEventListener("click",function() {})
+      
+    // document.getElementById("chk-impermeabil").addEventListener("change", function() {
+    //     document.getElementById("filtrare").click();
+    // });
+
     
 //-------------------------resetare------------------------
     document.getElementById("resetare").onclick= function()
@@ -229,6 +195,7 @@ window.addEventListener("load", function()
         document.getElementById("i_rad4").checked=true;
         var produse=document.getElementsByClassName("produs");
         document.getElementById("infoRange").innerHTML="(0)";
+        document.getElementById("chk-impermeabil").checked = false;
         for (let prod of produse)
         {
             prod.style.display="block";
@@ -251,13 +218,14 @@ window.addEventListener("load", function()
     function sortProducts(order)
     {
         var produse = document.getElementsByClassName("produs");
-        var v_produse=Array.from(produse)
+        console.log(produse);
+        var v_produse=Array.from(produse);
         
         v_produse.sort(function(a,b)
         {
 
-            let pret_a=parseInt(a.getElementsByClassName("val-pret")[0].innerHTML)
-            let pret_b=parseInt(b.getElementsByClassName("val-pret")[0].innerHTML)
+            let pret_a=parseFloat(a.getElementsByClassName("val-pret")[0].innerHTML)
+            let pret_b=parseFloat(b.getElementsByClassName("val-pret")[0].innerHTML)
            
             if(pret_a == pret_b)
             {
@@ -267,90 +235,86 @@ window.addEventListener("load", function()
             }
             return (pret_a-pret_b) * order;
         });
-        console.log(v_produse)
+        // console.log(v_produse);
+        
         for(let prod of v_produse)
         {
             prod.parentNode.appendChild(prod)
         }
     }
     
-    
-    
-    // buton la click
+   
    //--------------------suma produselor-------------------
-    window.onkeydown=function(e)
-    {
-        if (e.key=="c" && e.altKey)
-        {
-            var suma=0;
-            var produse=document.getElementsByClassName("produs");
-            for (let produs of produse)
-            {
-                var stil=getComputedStyle(produs)
-                if (stil.display!="none")
-                {
-                    suma+=parseFloat(produs.getElementsByClassName("val-pret")[0].innerHTML)
-                }
-            }
-            console.log(suma);
-            
-            if(!document.getElementById("par_suma"))
-            {
-                let p=document.createElement("p")
-                p.innerHTML=`<b>${suma}</b>`;
-                p.id="par_suma"
-                let container=document.getElementById("produse")
-                container.insertBefore(p,container.children[0])
-                // inserez paragraful inaintea primului fiu din container
-                setTimeout(function()
-                {
-                    let par = document.getElementById("par_suma");
-                    if(par)
-                        par.remove();
-                },2000)
-            }
-        }
+  // Ascultă evenimentul de clic pe buton
+document.getElementById('calculeazaSuma').addEventListener('click', function() 
+{
+    var suma = 0;
+    var produse = document.getElementsByClassName("produs");
 
+    
+    for (let produs of produse) {
+        var stil = getComputedStyle(produs);
+        if (stil.display != "none") {
+            suma += parseFloat(produs.getElementsByClassName("val-pret")[0].innerHTML);
+        }
     }
+
+    
+    // console.log(suma);
+
+    
+    if (!document.getElementById("par_suma"))
+    {
+        let p = document.createElement("p");
+        p.innerHTML = `<b>${suma}</b>`;
+        p.id = "par_suma";
+        let container = document.getElementById("produse");
+        container.insertBefore(p, container.children[0]); 
+
+        
+        setTimeout(function() {
+            let par = document.getElementById("par_suma");
+            if (par) {
+                par.remove();
+            }
+        }, 2000);
+    }
+});
+
+
+    // Paginare 
     document.querySelectorAll(".pagina").forEach(button => {
         button.addEventListener("click", function() {
             const pagina = this.getAttribute("data-pagina");
-            window.location.href = `/produse?page=${pagina}&limit=10`;
+            window.location.href = `/produse?page=${pagina}&limit=12`;
         });
     });
 
    // ---------------------------------Etapa 6b------------------------------
-   const textareaCuvinteCheie = document.getElementById('textarea-descriere');
+    
+    const produse = document.getElementsByClassName("produs");
+    
+    function filtreazaProduse() {
+        const descriereCautata = document.getElementById('textarea-descriere').value.toLowerCase();
 
-   textareaCuvinteCheie.addEventListener('input', function() 
-   {
-       const inputValue = textareaCuvinteCheie.value.trim();
-       const invalidFeedback = document.querySelector('#textarea-descriere + .invalid-feedback');
+        for (let prod of produse) {
+            const descriere = prod.querySelector('.val-descriere').innerText.toLowerCase();
 
-       if (inputValue === ''){
-           textareaCuvinteCheie.classList.add('is-invalid');
-           invalidFeedback.style.display = 'block';
-           } else {
-           textareaCuvinteCheie.classList.remove('is-invalid');
-           invalidFeedback.style.display = 'none';
-           }
-   });
-
-
-    document.getElementById('submitBtn').addEventListener('click', function() {
-        let textarea = document.getElementById('textarea-descriere');
-        if (textarea.value.trim() === '') {
-            textarea.classList.add('is-invalid');
-        } else {
-            textarea.classList.remove('is-invalid');
-            
+            if (descriere.includes(descriereCautata)) {
+                prod.style.display = 'block';
+            } else {
+                prod.style.display = 'none';
+            }
         }
-    });
+    }
+
+    document.getElementById('submitBtn').addEventListener('click', filtreazaProduse);
+
 
   
 
 
-    // bonus etapa 6
+    // bonus etapa 6 diacritice
     // cautare produs dupa nume  
     function normalizeText(text) {
         const diacriticsMap = {
@@ -402,7 +366,18 @@ window.addEventListener("load", function()
 
     
     
-    
+  
+    // fetch('/preturi')
+    // .then(response => response.json())
+    // .then(data => {
+    //     const { pretMinim, pretMaxim } = data;
+        
+    //     document.getElementById('inp-pret').setAttribute('min', pretMinim);
+    //     document.getElementById('inp-pret').setAttribute('max', pretMaxim);
+    //     document.getElementById('infoRange').innerText = `(${pretMinim} - ${pretMaxim})`;
+    // })
+    // .catch(error => console.error('Eroare:', error));
+
     
     
     

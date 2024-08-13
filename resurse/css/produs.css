@@ -41,3 +41,8 @@ h2{
         width:95%;
     }
 }
+
+.carousel-control-next-icon
+{
+    color: black;
+}

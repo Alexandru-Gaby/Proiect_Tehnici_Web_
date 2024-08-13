@@ -21,13 +21,18 @@
         width: 100%;
     }
 
+    .meniu li
+    {
+        width: 100%;
+        text-align: center;
+    }
+
     /*aici facem vizibil meniul cand facem click pe hamburger meniu*/
     #ch-menu:checked+ul.meniu 
     {
         display: block;
         z-index: 2;
         position: relative;
-
         animation-name: aparitie_meniu_p;
         animation-iteration-count: 1;
         animation-duration: 0.7s;
@@ -46,10 +51,11 @@
         animation-duration: 0.7s;
         animation-fill-mode: forwards;
         animation-timing-function: linear;
+        transition: all 3s linear;
     }
 
     /*optiunile se intind pe toata latimea containerului*/
-    nav ul.meniu li 
+    nav ul.meniu li
     {
         width: 100%;
     }
@@ -78,8 +84,8 @@
     }
 
 
-    /* pt. fiecare element din submeniu generam un triunghiulet alb inaintea lui*/
-    nav ul.sub-meniu>li li a:before 
+    
+    nav .sub-meniu>li li a:before 
     {
         content: " \25B7\00A0	";
         color: #bbb;

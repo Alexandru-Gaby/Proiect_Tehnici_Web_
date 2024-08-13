@@ -1,9 +1,9 @@
 .custom-hr {
   border: none;
   height: 10px;
-  margin: 10px 0;
+  margin: 20px 0;
   position: relative;
-  background: repeating-radial-gradient(circle, #FFA500, #FFA500 10px, #DB2E21 10px, #DB2E21 20px);
+  background: repeating-radial-gradient(circle, #FFA500, #FFA500 6px, #DB2E21 6px, #DB2E21 10px);
 }
 
 

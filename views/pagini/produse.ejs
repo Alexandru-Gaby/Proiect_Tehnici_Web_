@@ -9,6 +9,7 @@
         <script type="text/javascript" src=/resurse/js/produse.js></script>
         <script type="text/javascript" src=/resurse/js/produse-cos.js></script>
         <link rel="stylesheet" href="/resurse/css/modal.css" type="text/css"/>
+
         
     </head>
     
@@ -42,7 +43,7 @@
                     <label class="form-check-label btn btn-outline-primary" for="i_rad3">(700 &le; Greutate)</label>
                 </div>
                 <div class="col form-check form-switch">
-                    <input class="form-check-input" type="radio" name="gr_rad" id="i_rad4" value="toate"  >
+                    <input class="form-check-input" type="radio" name="gr_rad" id="i_rad4" value="toate" checked >
                     <label class="form-check-label btn btn-outline-primary" for="i_rad4">Toate</label>
                     <!-- checked -->
                 </div>
@@ -51,11 +52,17 @@
         </div>
 
             
-            <label> Pret minim: 
-                <!-- value="<pr- pret_min %>"  -->
-                <input type="range" id="inp-pret" value="0" min=0  max=800> <span id="infoRange">(0)</span>
-            </label>
-            <!-- value=" <pr- pret_max %>" -->
+        <label> Pret minim: 
+            <input type="range" id="inp-pret" value="0" min=0 max=800> 
+            <span id="infoRange">(<%= pretMinim %> - <%= pretMaxim %>)</span>
+        </label>
+        
+        <br>
+        <input type="checkbox" id="chk-impermeabil">
+        <label for="chk-impermeabil">Impermeabil</label>
+        <br>
+            
+         
             
             <label>Select simplu:
                 <select id="inp-categorie">
@@ -64,22 +71,25 @@
                         <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
                     <% } %>
                 </select>
-
-                <!-- select generat dinamic -->
-                <!-- meniu mod dinamic -->
-                    <!-- <li><a href="/produse?tip=barbati"> <pr%- opt.unnest %></a></li> -->
-
             </label>
             <br>
-            
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-outline-primary">
-                    <input type="checkbox" autocomplete="off"> Impermeabil:
-                </label>
-            </div>
+
+            <label for="sel-tip-sport">Selectează tipul de sport:
+            <input list="tipuri-sport" id="sel-tip-sport" name="sel-tip-sport">
+                <datalist id="tipuri-sport">
+                    <option value="Toate" selected>
+                    <option value="tenis">
+                    <option value="baschet">
+                    <option value="fotbal">
+                    <option value="tenis de masa">
+                    <option value="trainning">
+                </datalist>
+            </label>
+
+
             
             <div class="form-floating">
-                <textarea class="form-control" id="textarea-descriere" placeholder="" ></textarea>
+                <textarea class="form-control" id="textarea-descriere" placeholder=""></textarea>
                 <label for="textarea-descriere" class="form-label">Descriere</label>
                 <div class="invalid-feedback">Eroare</div>
                 <button id="submitBtn" class="btn btn-primary mt-3">Trimite</button>
@@ -98,98 +108,92 @@
                     <button class="col-10 buton-sortCrescNume" id="sortCrescNume"><i class="bi bi-sort-alpha-up"></i><span class="ascuns-ecran-mic">Sorteaza crescator dupa pret si dupa nr. culori</span></button>
                     </div>
                     <div class="col">
-                    <button class=" col-10 buton-sortDescrescNume" id="sortDescrescNume"><i class="bi bi-sort-alpha-down-alt"></i><span class="ascuns-ecran-mic">Sorteaza descrescator dupa pret si dupa nr.culori</span></button>
+                    <button class="col-10 buton-sortDescrescNume" id="sortDescrescNume"><i class="bi bi-sort-alpha-down-alt"></i><span class="ascuns-ecran-mic">Sorteaza descrescator dupa pret si dupa nr.culori</span></button>
                     </div>
                 
                 </div>  
             </div>  
             
-            <p id="p-suma">Apăsați Alt+"c" pentru suma preturilor produselor afișate. </p>
+            <!-- <p id="p-suma">Apăsați Alt+"c" pentru suma preturilor produselor afișate. </p> -->
+            <button id="calculeazaSuma" class="btn-primary btn-outline-primary">Calculează Suma</button>
+
             <section id="produse">
                 <h2>Produse</h2>
                 <div class="grid-produse">
                     
                     <% if (locals.produse.length === 0) { %>
                     <p>Nu exista produse conform filtrarii curente!</p>
-                     <% }  else  { %>
-                    <!-- <pr 
-                        pret_min = locals.produse[0];
-                        pret_maxim = locals.produse[0];
-                        for(i=1; i < locals.produse.length; i++)
-                        {
-                            if(pret_min > locals.produse[i])
-                            pret_min = locals.produse[i];
-                            
-                            if(pret_max < locals.produse[i])
-                            pret_max = locals.produse[i];
-                        }
-                        
-                        %> -->
-                    <% for( let prod of locals.produse)
+                     <% }  else  
+                    
                     { %>
                     
-                        <article class="produs" id="ent<%- prod.id %>">
-                            
-                            
-                            <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
+                        <% for( let prod of locals.produse)
+                        { %>
                         
-                            <table class="tabel-produse">
-                                <tbody>
-                                    <thead>
-                                        <tr>
-                                            <th>Pret</th>
-                                            
-                                            <th>Vector culori</th>
-                                            <th>Impermeabil</th>
-                                            <th>Greutate</th>
-                                            <th>Data</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                        <tr>
-                                            <td data-label="Pret"><span class="val-pret"><%- prod.pret%></span></td>
-                                            <td data-label="Vector culori"><span class="val-culori"><%- prod.vector_culori.join(', ') %></span></td>
-                                            <td data-label="Impermeabil"><span class="val-impermeabil"><%- prod.rezistent_la_apa ? 'Da' : 'Nu' %></span></td>
-                                            <td data-label="Greutate"><span class="val-greutate"><%- prod.greutate%></span></td>
-                                            <td data-label="Data"><span class="data"><%- prod.data_adaugare%></span></td>
-                                        </tr>
-                                    </tbody>
-                            </table>
-                        
-                            <p class="descriere">Descriere: <span class="val-descriere"><%- prod.descriere%></span></p>
-                            <td><span class="val-categorie"><%- prod.categorie%></span></td>
-                            <figure>
-                                <img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" />
-                            </figure>
-
-                            <label class="selecteaza-cos btn-group-toggle" data-toggle="buttons">
-                                Selectează:<br/>
-                                <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
-                            </label>
-
-                            <button class="open-modal-btn" data-index="<%- prod.id %>">Vezi detalii</button>
-                        
-                        </article>
-
-
-
-                        <div id="modal-<%= prod.id %>" class="modal">
-                            
-                            <div class="modal-content">
+                            <article class="produs" id="ent<%- prod.id %>">
                                 
-                                <span class="close" data-id="<%- prod.id %>">&times;</span>
-                                <h3 class="nume">Nume: <%= prod.nume %></h3>
-                                <p data-label="">Pret: <%= prod.pret %></p>
-                                <p data-label="">Culori: <%= prod.vector_culori.join(', ') %></p>
-                                <p data-label="">Impermeabil: <%= prod.rezistent_la_apa ? 'Da' : 'Nu' %></p>
-                                <p data-label="">Greutate: <%= prod.greutate %></p>
-                                <p data-label>Data: <%= prod.data_adaugare %></p>
-                                <p data-label>Descriere: <%= prod.descriere %></p>
+                                
+                                <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
+                            
+                                <table class="tabel-produse">
+                                    <tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>Pret</th>
+                                                
+                                                <th>Vector culori</th>
+                                                <th>Impermeabil</th>
+                                                <th>Greutate</th>
+                                                <th>Data</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                            <tr>
+                                                <td data-label="Pret"><span class="val-pret"><%- prod.pret%></span></td>
+                                                <td data-label="Vector culori"><span class="val-culori"><%- prod.vector_culori.join(', ') %></span></td>
+                                                <td data-label="Impermeabil"><span class="val-impermeabil"><%- prod.rezistent_la_apa ? 'Da' : 'Nu' %></span></td>
+                                                <td data-label="Greutate"><span class="val-greutate"><%- prod.greutate%></span></td>
+                                                <td data-label="Data"><span class="data"><%- prod.data_adaugare%></span></td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                            
+                                <p class="descriere">Descriere: <span class="val-descriere"><%- prod.descriere%></span>
+                                    sport:<span class="tip_sport"><%- prod.sport%></span></p>
+                                <span class="val-categorie"><%- prod.categorie%></span>
+                                
                                 <figure>
-                                    <img src="/resurse/imagini/produse/<%= prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%= prod.nume %>]" />
+                                    <img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" />
                                 </figure>
+
+                                <label class="selecteaza-cos btn-group-toggle" data-toggle="buttons">
+                                    Selectează:<br/>
+                                    <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
+                                </label>
+
+                                <button class="open-modal-btn" data-index="<%- prod.id %>">Vezi detalii</button>
+                            
+                            </article>
+
+
+                            
+                            <div id="modal-<%= prod.id %>" class="modal">
+                                
+                                <div class="modal-content">
+                                    
+                                    <span class="close" data-id="<%- prod.id %>">&times;</span>
+                                    <h3 class="nume">Nume: <%= prod.nume %></h3>
+                                    <p data-label="">Pret: <%= prod.pret %></p>
+                                    <p data-label="">Culori: <%= prod.vector_culori.join(', ') %></p>
+                                    <p data-label="">Impermeabil: <%= prod.rezistent_la_apa ? 'Da' : 'Nu' %></p>
+                                    <p data-label="">Greutate: <%= prod.greutate %></p>
+                                    <p data-label>Data: <%= prod.data_adaugare %></p>
+                                    <p data-label>Descriere: <%= prod.descriere %></p>
+                                    <figure>
+                                        <img src="/resurse/imagini/produse/<%= prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%= prod.nume %>]" />
+                                    </figure>
+                                </div>
                             </div>
-                        </div>
 
                         <% }%>
                     <%}%>

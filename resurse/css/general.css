@@ -7,7 +7,7 @@ body
   --cl-light-t:rgba(255,255,255,0.7);
   --cl-text:black;
   --imag-body-backgr:url("../imagini/background-bomboane.jpg");
-  --gradient-body:linear-gradient(transparent, transparent 30%, white 50%, transparent 70%, transparent);
+  /* --gradient-body:linear-gradient(transparent, transparent 30%, white 50%, transparent 70%, transparent); */
 
 }
 

@@ -18,7 +18,6 @@ class Utilizator{
     constructor({id, username, nume, prenume, email, parola, rol, culoare_chat="black", poza}={}) {
         this.id=id;
 
-        //optional sa facem asta in constructor
         try{
         if(this.checkUsername(username))
             this.username = username;

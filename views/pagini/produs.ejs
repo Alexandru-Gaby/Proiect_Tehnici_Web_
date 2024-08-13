@@ -8,6 +8,7 @@
         <%- include("../fragmente/head") %>     
         <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src=/resurse/js/produs.js></script>
+        
     </head>
     <body>
         <%- include("../fragmente/header") %>
@@ -19,16 +20,16 @@
                         <h3>
                             <span class="nume"><%- locals.prod.nume %></span>
                         </h3>
-                        <!-- id? -->
+                        
                         <span id="id" style="display: none;"> <%- locals.prod.id -%></span>
                         <p>Pret: <span class="pret"><%- locals.prod.pret %> </span></p>
                         <!-- <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p> -->
                         <p>Nivel_de_practicare: <span class="nivel_de_practicare"><%- locals.prod.nivel_de_practicare %> </span></p>
                         <p>Tip_produs: <span class="tip_produs"><%- locals.prod.tip_produs %> </span></p>
                         <p>Greutate: <span class="val-greutate"><%- locals.prod.greutate %> </span></p>
-                        <p>Sport: <span class="tip_sport"><%- locals.prod.sport %>  </span> </p>
+                        <p>Sport: <span class="tip_sport" id="sport"><%- locals.prod.sport %>  </span> </p>
                         <p>Categorie: <span class="val-categorie"><%- locals.prod.categorie %> </span></p>
-                        <!-- vector_culori? -->
+                        
                         <p>Impermeabil: <span class="rezistent_la_apa"><%- locals.prod.rezistent_la_apa %> </span></p>
                         <p>Data adăugare: <span class="categorie"><%- locals.prod.data_adaugare %> </span></p>
                         
@@ -46,13 +47,38 @@
                                 </div>
                             </div>
                         
-                        <figure class="imag-produs">
+                        <!-- <figure class="imag-produs">
                             <img  src="/resurse/imagini/produse/<%- locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
-                        </figure> 
+                        </figure>  -->
+
+                         <!-- Carusel Bootstrap -->
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                            <div class="carousel-indicators">
+                                <% prod.imagini.forEach((img, index) => { %>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" aria-current="true" aria-label="Slide <%= index + 1 %>"></button>
+                                <% }); %>
+                            </div>
+                            <div class="carousel-inner">
+                                <% prod.imagini.forEach((img, index) => { %>
+                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img src="/resurse/imagini/imagini_multiple/<%= prod.imagini_multiple %>/<%- img %>" class="d-block w-100" alt="[imagine <%- prod.nume %>]">
+                                    </div>
+                                <% }); %>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                         
                         
                     </article>
-                
+ 
+
             </section>
         </main>
 

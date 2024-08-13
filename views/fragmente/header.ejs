@@ -39,7 +39,7 @@
                 <div id="acasa-mediu">
                     <a href="/index">
                         <i class="fas fa-regular fa-house"></i>
-                        <span>Welcome</span>
+                        <span id="welcome">Welcome</span>
                     </a>
                 </div>
             </li>
@@ -47,23 +47,28 @@
             <li><a href="/index#orar">Orar</a></li>
             
             <li>
-                <a href="#">Categorii</a>
+                <a href="/produse">Categorii</a>
                 
                 <ul class="sub-meniu">
                     <li>
                         <a href="/produse">Toate</a>
                     </li>
+                    
+                    <li>
+                        <a href="/produse?tip=barbati">bărbați</a>
+                    </li>
+                    <li>
+                        <a href="/produse?tip=femei">femei</a>
+                    </li>
+                    <li>
+                        <a href="/produse?tip=copii">copii</a>
+                    </li>
 
-                    <li>
-                        <a href="/produse?tip=barbati">Bărbați</a>
-                    </li>
-                    <li>
-                        <a href="/produse?tip=femei">Femei</a>
-                    </li>
-                    <li>
-                        <a href="/produse?tip=copii">Copii</a>
-                    </li>
-
+                    <!-- <pe optiuni.forEach(function(categorie) { %>
+                        <li>
+                            <a href="/produse?tip=<pe= categorie.unnest %>"><pr= categorie.unnest %></a>
+                        </li>
+                    <pe }); %> -->
                 </ul>
             </li>
             
@@ -71,11 +76,7 @@
                 <div><a href="/galerie">Galerie</a></div>
             
             </li>
-            <li><div>Despre</div>
-            
-                <ul>
-
-                </ul>
+            <li><div><a>Despre</a></div>
             
             </li>
 

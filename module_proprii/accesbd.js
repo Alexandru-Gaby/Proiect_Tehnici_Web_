@@ -31,11 +31,6 @@ class AccesBD{
             password:"alex", 
             host:"localhost", 
             port:5432});
-        // this.client2= new Pool({database:"laborator",
-        //         user:"irina", 
-        //         password:"irina", 
-        //         host:"localhost", 
-        //         port:5432});
         this.client.connect();
     }
 
@@ -60,7 +55,7 @@ class AccesBD{
      */
     
     static getInstanta({init="local"}={}){
-        console.log(this);//this-ul e clasa nu instanta pt ca metoda statica, obicet
+        console.log(this);//this-ul e clasa nu instanta pt ca metoda statica, obiect
         if(!this.#instanta){
             this.#initializat=true;
             this.#instanta=new AccesBD();
@@ -108,11 +103,13 @@ class AccesBD{
      * @param {ObiectQuerySelect} obj - un obiect cu datele pentru query
      * @param {function} callback - o functie callback cu 2 parametri: eroare si rezultatul queryului
      */
-    select({tabel="",campuri=[],conditiiAnd=[]} = {}, callback, parametriQuery=[]){
-        //conditiiAnd sunt conditiile din where
+    select({tabel="",campuri=[],conditiiAnd=[] } = {}, callback, parametriQuery=[]){
+        
         let conditieWhere="";
-        if(conditiiAnd.length>0)
+        if(conditiiAnd.length>0){
             conditieWhere=`where ${conditiiAnd.join(" and ")}`; 
+        }
+        
         let comanda=`select ${campuri.join(",")} from ${tabel} ${conditieWhere}`;
         console.error(comanda);
         /*
@@ -140,13 +137,8 @@ class AccesBD{
         }
     }
     insert({tabel="",campuri={}} = {}, callback){
-                /*
-        campuri={
-            nume:"savarina",
-            pret: 10,
-            calorii:500
-        }
-        */
+             
+        
         console.log("-------------------------------------------")
         console.log(Object.keys(campuri).join(","));
         console.log(Object.values(campuri).join(","));
@@ -160,6 +152,7 @@ class AccesBD{
      * @property {string} tabel - numele tabelului
      * @property {string []} campuri - o lista de stringuri cu numele coloanelor afectate de query; poate cuprinde si elementul "*"
      * @property {string[]} conditiiAnd - lista de stringuri cu conditii pentru where
+     * @property {string[]} conditiiOr - lista de stringuri cu conditii pentru where
      */   
     // update({tabel="",campuri=[],valori=[], conditiiAnd=[]} = {}, callback, parametriQuery){
     //     if(campuri.length!=valori.length)
@@ -182,7 +175,7 @@ class AccesBD{
         let conditieWhere="";
         if(conditiiAnd.length>0)
             conditieWhere=`where ${conditiiAnd.join(" and ")}`;
-        let comanda=`update ${tabel} set ${campuriActualizate.join(", ")}  ${conditieWhere}`;
+            let comanda=`update ${tabel} set ${campuriActualizate.join(", ")}  ${conditieWhere}`;
         console.log(comanda);
         this.client.query(comanda,callback)
     }
@@ -229,7 +222,6 @@ class AccesBD{
     query(comanda, callback){
         this.client.query(comanda,callback);
     }
-
 }
 
 module.exports=AccesBD;

@@ -256,10 +256,10 @@ app.get(["/","/home","/index"], async function(req, res)
 })
 
 // ----------------------Produse----------------------
-//selectie de produse
+
 app.get("/produse", function(req, res) 
 {
-    let limit = parseInt(req.query.limit) || 9;
+    let limit = parseInt(req.query.limit) || 12;
     let page = parseInt(req.query.page) || 1; 
     let offset = (page - 1) * limit; 
     var conditionQuery = "";
@@ -291,47 +291,115 @@ app.get("/produse", function(req, res)
             let totalProduse = parseInt(rezCount.rows[0].count);
             let totalPagini = Math.ceil(totalProduse / limit);
 
-            client.query(`select * from produse ${conditionQuery} limit ${limit} offset ${offset}`, function(err, rez)
-            {
+
+            
+            client.query(`SELECT MIN(pret) AS pret_minim, MAX(pret) AS pret_maxim FROM produse ${conditionQuery}`, function(err, rezPret) {
                 if (err) {
                     console.log(err);
                     afisareEroare(res, 2);
-                } else {
-                    res.render("pagini/produse", 
-                    {
-                        produse: rez.rows,
-                        optiuni: rezOptiuni.rows,
-                        pagini: totalPagini,
-                        paginaCurenta: page
-                    });
+                    return;
                 }
+
+                // Obținem prețurile minime și maxime din rezultatul interogării
+                const pretMinim = rezPret.rows[0].pret_minim;
+                const pretMaxim = rezPret.rows[0].pret_maxim;
+
+
+                
+                client.query(`select * from produse ${conditionQuery} limit ${limit} offset ${offset}`, function(err, rez)
+                {
+                    if (err) {
+                        console.log(err);
+                        afisareEroare(res, 2);
+                    } else {
+                        res.render("pagini/produse", 
+                        {
+                            produse: rez.rows,
+                            optiuni: rezOptiuni.rows,
+                            pagini: totalPagini,
+                            paginaCurenta: page,
+                            pretMinim: pretMinim,
+                            pretMaxim: pretMaxim 
+                        });
+                    }
+
+                });
             });
         });
     });
 
-    //min si max de la pret select min
 });
 
     
-app.get("/produs/:id", function(req, res)
+// carusel 
+app.get("/produs/:id", function(req, res) 
 {
-    client.query(`select * from produse where id=${req.params.id}`, function(err,rez)
-    {
-        
-        if(err) 
-        {
-        console.log(err);
-        afisareEroare(res,2);
-        }
-        else{
-    
-            res.render("pagini/produs", { prod: rez.rows[0]} )
-            }
-        
-    })
-    
-})
 
+    client.query(`SELECT * FROM produse WHERE id=${req.params.id}`, function(err, rez)
+     {
+        if (err) {
+            console.log(err);
+            return res.status(500).send("Eroare la interogarea bazei de date.");
+        }
+        //array cu randurile rezultate
+        const produs = rez.rows[0];
+        // console.log(produs);
+        
+        if (!produs) {
+            return res.status(404).send("Produsul nu a fost găsit.");
+        }
+
+        const folderImagini = produs.imagini_multiple;
+        if (!folderImagini) {
+            console.log("Acest produs nu are un folder de imagini asociat.");
+            return res.status(500).send("Acest produs nu are un folder de imagini asociat.");
+        }
+
+        const imagesDir = path.join(__dirname, "resurse", "imagini", "imagini_multiple", folderImagini);
+
+        fs.readdir(imagesDir, (err, files) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Eroare la citirea imaginilor produsului.");
+            }
+
+            const imagini = files.filter(file => /\.(jpe?g|png|gif)$/i.test(file));
+            produs.imagini = imagini;
+            produs.caleImagini = `/resurse/imagini/imagini_multiple/${folderImagini}`;
+
+            res.render("pagini/produs", { prod: produs });
+        });
+    });
+});
+
+
+client.query('SELECT id, imagini_multiple FROM produse', (err, rezultate) => {
+    if (err) {
+      console.error('Eroare la citirea produselor din baza de date:', err);
+      return;
+    }
+  
+    rezultate.rows.forEach(produs => {
+      const idProdus = produs.id;
+      const numeFolder = produs.imagini_multiple;
+      const caleFolder = path.join(__dirname,"resurse","imagini","imagini_multiple", numeFolder);
+  
+      
+      if (fs.existsSync(caleFolder)) {
+        console.log(`Directorul produs-${idProdus} există deja.`);
+      } else {
+        // Creează directorul pentru fiecare produs doar dacă nu există deja
+        fs.mkdir(caleFolder, { recursive: true }, err => {
+          if (err) {
+            console.error(`Eroare la crearea directorului ${idProdus}:`, err);
+          } else {
+            console.log(`Directorul a fost creat cu succes pentru produsul cu id-ul ${idProdus}.`);
+          }
+        });
+      }
+    });
+  });
+  
 // ---------------------------------  cos virtual --------------------------------------
 
 
@@ -476,12 +544,11 @@ app.post("/cumpara",function(req, res)
 //--------------------------------Utilizatori--------------------------//
 app.post("/inregistrare",function(req, res)
 {
-    //adauga un input cerinta
     var username;
     var poza;
     var formular= new formidable.IncomingForm()
     formular.parse(req, function(err, campuriText, campuriFisier )
-    {//4
+    {
         console.log("Inregistrare:",campuriText);
 
 
@@ -490,7 +557,7 @@ app.post("/inregistrare",function(req, res)
         var eroare="";
 
 
-        // TO DO var utilizNou = creare utilizator
+        
         var utilizNou = new Utilizator();
         try
         {
@@ -768,7 +835,7 @@ app.get("/suma/:a/:b", function(req, res){
 });
 
 app.get("/favicon.ico", function(req, res){
-    res.sendFile(path.join(__dirname,"resurse/imagini/ico/favicon.ico"));
+    res.sendFile(path.join(__dirname,"resurse/favicon/favicon.ico"));
     
 });
  
@@ -781,7 +848,7 @@ app.get("/*.ejs", function(req, res){
     
 });
 
-app.get(new RegExp("^\/[A-Za-z\/0-9]*\/$"), function(req, res){
+app.get(new RegExp("^\/resurse\/[A-Za-z0-9\/]*\/$"), function(req, res){
     afisareEroare(res,403);
     
 });
@@ -882,7 +949,6 @@ app.post("/sterge_utiliz", function(req, res)
     }
     
 })
-
 
 
 
@@ -1041,12 +1107,12 @@ function initImagini()
         
 
         sharp(caleFisAbs).resize(200).toFile(caleFisMicAbs);
-		imag.fisier_mic=path.join("/",obGlobal.obImagini.cale_galerie,"mic",numeFis+".webp");
+		imag.fisier_mic=path.join("/",obGlobal.obImagini.cale_galerie,"Mic",numeFis+".webp");
         
         imag.fisier=path.join("/", obGlobal.obImagini.cale_galerie, imag.cale_imagine)
     }
     
-    console.log(obGlobal.obImagini)
+    // console.log(obGlobal.obImagini)
 }
 initImagini();
 
